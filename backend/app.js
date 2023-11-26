@@ -1,11 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-const Book = require("./models/book.model");
+const Book = require("./models/villa.model");
 const Purchase = require("./models/purchase.model");
 const bcrypt = require("bcrypt");
 
-const mongouri = "mongodb://localhost:27017/lab1db";
+const mongouri = "mongodb://localhost:27017/villa-store";
 // app service
 const app = express();
 
