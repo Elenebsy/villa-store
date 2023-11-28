@@ -134,6 +134,18 @@ app.get("/villas", async (req, res) => {
   }
 });
 
+app.get("/villas/:position", async (req, res) => {
+  try {
+    // req id
+    const position = req.params.position;
+    // find by id in users
+    const villa = await Villa.find(position);
+    res.status(200).json(villa);
+  } catch (error) {
+    res.status(402).json({ message: error.message });
+  }
+});
+
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 

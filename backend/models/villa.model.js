@@ -8,6 +8,7 @@ const villaSchema = new Schema(
     status_sale: { type: Boolean, required: true },
     price_sale: { type: Number, required: true },
     villa_adress: { type: String, required: true },
+    position: { type: String, required: true },
     installment_price: { type: String, required: false },
     installment_period: { type: String, required: false },
     num_room: { type: Number, required: true },
