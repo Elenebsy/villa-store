@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const purchaseSchema = new Schema(
+const userSchema = new Schema(
   {
-    userid: { type: mongoose.Schema.Types.ObjectId, required: true },
-    bookid: { type: mongoose.Schema.Types.ObjectId, required: true },
+    user_id: { type: String, required: true },
+    villa_id: { type: String, required: true },
+    installment: { type: Boolean, required: false },
   },
   {
     timestamps: true,
   }
 );
-module.exports = mongoose.model("purchaseSchema", purchaseSchema);
+module.exports = mongoose.model("User", userSchema);
