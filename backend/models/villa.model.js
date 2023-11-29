@@ -9,8 +9,10 @@ const villaSchema = new Schema(
     price_sale: { type: Number, required: true },
     villa_adress: { type: String, required: true },
     position: { type: String, required: true },
-    installment_price: { type: String, required: false },
+    installment_price: { type: String, required: false },//ana mesh 3ayz kst
     installment_period: { type: String, required: false },
+    Phone: { type:string, required: true },//rakm elpay3 
+    email: { type:string, required: true},//email elpay3 3shan elshary ytwasl m3ah 
     num_room: { type: Number, required: true },
     num_bedroom: { type: Number, required: true },
     num_bathroom: { type: Number, required: true },
@@ -24,3 +26,4 @@ const villaSchema = new Schema(
   }
 );
 module.exports = mongoose.model("villa", villaSchema);
+
