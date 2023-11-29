@@ -112,20 +112,31 @@ app.post("/adduser", async (req, res) => {
 // Assignment => add new route here to edit user info ???
 app.put("/users/:id", async (req, res) => {
   try {
-    const userParam = req.params; // Change from req.params.user_id to req.params.id
-
-    // Find the user by id
-    const user = await User.findOne({ user_id: userParam.user_id });
+    const user_id = req.params.user_id;
+    // find by id in users
+    const user = await User.findOne(user_id);
 
     if (!user) {
+      console.log(user);
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update user details
-    user.fullName = req.body.name || user.fullName;
-    user.email = req.body.email || user.email;
-    user.password = req.body.name || user.password;
-    user.phone = req.body.phone || user.phone;
+    // Update user details if provided in the request body
+    if (req.body.fullName) {
+      user.fullName = req.body.fullName;
+    }
+
+    if (req.body.email) {
+      user.email = req.body.email;
+    }
+
+    if (req.body.password) {
+      user.password = req.body.password;
+    }
+
+    if (req.body.phone) {
+      user.phone = req.body.phone;
+    }
     // Add more fields as needed
 
     // Save the updated user
@@ -133,7 +144,7 @@ app.put("/users/:id", async (req, res) => {
 
     res.status(200).json(user);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: `Server error: ${error.message}` });
   }
 });
 
