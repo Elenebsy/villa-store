@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Villa = require("./models/villa.model");
+const Purchase = require("./models/purchase.model");
 const bcrypt = require("bcrypt");
 
 const mongouri = "mongodb://localhost:27017/villa-store";
@@ -27,9 +28,9 @@ app.get("/users", async (req, res) => {
 app.get("/user/:id", async (req, res) => {
   try {
     // req id
-    const id = req.params.id;
+    const user_id = req.params.user_id;
     // find by id in users
-    const user = await User.findById(id);
+    const user = await User.findOne(user_id);
     res.status(200).json(user);
   } catch (error) {
     res.status(402).json({ message: error.message });
@@ -57,10 +58,10 @@ app.get("/users/email/:email", async (req, res) => {
 
 app.delete("/users/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { user_id } = req.params;
 
     // Attempt to find and delete the user by ID
-    const user = await User.findByIdAndDelete(id);
+    const user = await User.findOneAndDelete(user_id);
 
     if (!user) {
       return res
@@ -90,13 +91,13 @@ app.post("/adduser", async (req, res) => {
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
       fullName: userParam.fullName, // Make sure 'fullName' is provided
-      name: userParam.name,
+      user_id: userParam.user_id,
       phone: userParam.phone,
       email: userParam.email,
       password: hashedPassword,
-      seller: userParam.seller,
-      buyer: userParam.buyer,
-      image: userParam.image,
+      // seller: userParam.seller,
+      // buyer: userParam.buyer,
+      // image: userParam.image,
     });
 
     // Save the user to the database
@@ -109,16 +110,30 @@ app.post("/adduser", async (req, res) => {
 });
 
 // Assignment => add new route here to edit user info ???
-app.put("/users/:id", (req, res) => {
-  const id = req.params.id;
-  const updatedUser = req.body;
-  const index = users.findIndex((user) => user.id === id);
+app.put("/users/:id", async (req, res) => {
+  try {
+    const userParam = req.params; // Change from req.params.user_id to req.params.id
 
-  if (index !== -1) {
-    users[index] = { ...users[index], ...updatedUser };
-    res.status(200).json(users[index]);
-  } else {
-    res.status(404).send("User not found");
+    // Find the user by id
+    const user = await User.findOne({ user_id: userParam.user_id });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user details
+    user.fullName = req.body.name || user.fullName;
+    user.email = req.body.email || user.email;
+    user.password = req.body.name || user.password;
+    user.phone = req.body.phone || user.phone;
+    // Add more fields as needed
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
