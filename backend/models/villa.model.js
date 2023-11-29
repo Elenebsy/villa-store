@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const villaSchema = new Schema(
   {
     villa_id: { type: String, unique: true, required: true },
-    user_id: { type: String, unique: true, required: true },
-    status_sale: { type: Boolean, required: true },
-    price_sale: { type: Number, required: true },
+    user_id: { type: String, required: true },
+    status_sale: { type: Boolean, required: false },
+    price: { type: Number, required: true },
     villa_adress: { type: String, required: true },
     position: { type: String, required: true },
     installment_price: { type: String, required: false },
