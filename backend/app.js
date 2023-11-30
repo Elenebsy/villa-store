@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Villa = require("./models/villa.model");
 const Seller = require("./models/seller.model");
+const Property = require("./models/property.model");
 const bcrypt = require("bcrypt");
 
 const mongouri = "mongodb://localhost:27017/villa-store";
@@ -109,6 +110,8 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 
 // Record and Adding the data of new Seller person
 app.post("/addnewseller", async (req,res) => {
@@ -125,7 +128,7 @@ app.post("/addnewseller", async (req,res) => {
     const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
     // Create a new User instance with the hashed password and 'fullName'
     const seller = new Seller({
-      user_id:  sellerparam.user_id,
+      seller_id:  sellerparam.seller_id,
       fullName: sellerparam.fullName, // Make sure 'fullName' is provided
       name: sellerparam.name,
       phone: sellerparam.phone,
@@ -141,6 +144,47 @@ app.post("/addnewseller", async (req,res) => {
     await seller.save();
 
     res.status(201).json({ message: "Seller added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
+/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+// Record and Adding the data of new Property
+app.post("/addnewproperty", async (req,res) => {
+  try {
+    const propertyparam = req.body;
+
+    // Check if the property has been published before
+    if (await Property.findOne({ property_id: propertyparam.property_id })) {
+      return res.status(400).json({ message: "This property has been published before" });
+    }    
+    const property = new Property({
+      property_id:  propertyparam.property_id,
+      name: propertyparam.name,
+      description: propertyparam.description,
+      type:propertyparam.type,
+      num_room: propertyparam.num_room,
+      num_Bedrooms: propertyparam.num_Bedrooms,
+      num_Bathrooms: propertyparam.num_Bathrooms,
+      num_Floors: propertyparam.num_Floors,
+      num_individuals: propertyparam.num_individuals,
+      address: propertyparam.address,
+      city: propertyparam.city,
+      state: propertyparam.state,
+      zipCode: propertyparam.zipCode,
+      features: propertyparam.features,
+      price: propertyparam.price,
+      status: propertyparam.status,
+      availabilityDate: propertyparam.availabilityDate,
+      images: propertyparam.images,
+    });
+    // Save the property to the database
+    await property.save();
+
+    res.status(201).json({ message: "Property added successfully" });
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
