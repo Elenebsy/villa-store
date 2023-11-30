@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Villa = require("./models/villa.model");
+const Seller = require("./models/seller.model");
 const bcrypt = require("bcrypt");
 
 const mongouri = "mongodb://localhost:27017/villa-store";
@@ -110,16 +111,51 @@ app.post("/adduser", async (req, res) => {
 
 
 // Record and Adding the data of new Seller person
+app.post("/addnewseller", async (req,res) => {
+  try {
+    const sellerparam = req.body;
+
+    // Check if the email is already in use
+    if (await Seller.findOne({ email: sellerparam.email })) {
+      return res.status(400).json({ message: "Email is already in use" });
+    }
+
+    // Hash the user's password before saving it
+    const saltRouns = 10;
+    const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
+    // Create a new User instance with the hashed password and 'fullName'
+    const seller = new Seller({
+      user_id:  sellerparam.user_id,
+      fullName: sellerparam.fullName, // Make sure 'fullName' is provided
+      name: sellerparam.name,
+      phone: sellerparam.phone,
+      email: sellerparam.email,
+      password: hashedPassword,
+      street: sellerparam.street,
+      city: sellerparam.city,
+      state: sellerparam.state,
+      zipCode: sellerparam.zipCode,
+    });
+
+    // Save the user to the database
+    await seller.save();
+
+    res.status(201).json({ message: "Seller added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
 
 // Assignment => add new route here to edit user info ???
 app.put("/users/:id", (req, res) => {
   const id = req.params.id;
   const updatedUser = req.body;
-  const index = users.findIndex((user) => user.id === id);
+  const index = User.findIndex((user) => user.id === id);
 
   if (index !== -1) {
-    users[index] = { ...users[index], ...updatedUser };
-    res.status(200).json(users[index]);
+    User[index] = { ...User[index], ...updatedUser };
+    res.status(200).json(User[index]);
   } else {
     res.status(404).send("User not found");
   }
