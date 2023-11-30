@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const sellerpersonSchema = new Schema(
+const sellerSchema = new Schema(
   {
     user_id: { type: String, unique: true, required: true },
     fullName: { type: String, required: true },
@@ -9,9 +9,13 @@ const sellerpersonSchema = new Schema(
     password: { type: String, required: true },
     phone: { type: String, required: true },
     image: { type: String, required: false },
-  },
+    street: { type: String, required: true },
+    city: { type: String, required: true},
+    state: { type: String, required: true},
+    zipCode: { type: String, required: false },
+    },
   {
     timestamps: true,
   }
 );
-module.exports = mongoose.model("seller person", sellerpersonSchema);
+module.exports = mongoose.model("Seller",sellerSchema);
