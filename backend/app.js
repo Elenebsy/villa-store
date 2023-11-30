@@ -86,9 +86,9 @@ app.post("/adduser", async (req, res) => {
     // Hash the user's password before saving it
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
-
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
+      user_id:  userParam.user_id,
       fullName: userParam.fullName, // Make sure 'fullName' is provided
       name: userParam.name,
       phone: userParam.phone,
@@ -107,6 +107,9 @@ app.post("/adduser", async (req, res) => {
     res.status(404).json({ message: "Server error: " + err.message });
   }
 });
+
+
+// Record and Adding the data of new Seller person
 
 // Assignment => add new route here to edit user info ???
 app.put("/users/:id", (req, res) => {
