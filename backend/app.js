@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Villa = require("./models/villa.model");
+const Purchase = require("./models/purchase.model");
+
 const bcrypt = require("bcrypt");
 
 const mongouri = "mongodb://localhost:27017/villa-store";
