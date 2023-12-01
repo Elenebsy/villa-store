@@ -1,7 +1,7 @@
 import React from "react";
 import DehazeIcon from "@mui/icons-material/Dehaze";
-import login from "@mui/icons-material/Login"
 import logo from "../Assets/cas.png";
+import {NavLink} from "react-router-dom"
 import "./nav.css";
 import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
@@ -24,42 +24,29 @@ function ResponsiveAppBar(props) {
           <dev className="navright">
             <ul className="links">
               <li>
-                <a href="#home">Home</a>
+                <NavLink to="/"className="lk">Home</NavLink>
               </li>
               <li>
-                <a href="#about">About Us</a>
+                <NavLink to ="/about"className="lk">About Us</NavLink>
               </li>
               <li>
-                <a href="#contact">Contact</a>
+                <NavLink to="/contact"className="lk">Contact</NavLink>
               </li>
               <li>
-                <a href="#login" className="btn">
+                <NavLink to="/login"className="lk">
                   Login
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#signup" className="btn">
+                <NavLink to="/register"className="lk">
                   Sign Up
-                </a>
+                </NavLink>
               </li>
             </ul>
             <dev className="hamburger">
               <DehazeIcon  className="hum" color='secondary'/>
               <dev className="nav-option Home">
 
-                <h1>Home</h1>
-              </dev>
-              <dev className="nav-option About">
-                <h1>About us</h1>
-              </dev>
-              <dev className="nav-option Contact">
-                <h1>Contact</h1>
-              </dev>
-              <dev className="nav-option Login">
-                <h1>Login</h1>
-              </dev>
-              <dev className="nav-option SignUp">
-                <h1>SignUp</h1>
               </dev>
             </dev>
           </dev>

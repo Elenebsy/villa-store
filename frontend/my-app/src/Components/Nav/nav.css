@@ -13,7 +13,7 @@ nav img{
     align-items: flex-end;
 
 }
-.links li a{
+.lk {
     color: white;
     font-size: 1.5rem;
     margin: 5px 10px;
@@ -27,12 +27,14 @@ nav{
     background-color: #2D033BF7;
     z-index: 2;
 }
-.links li a:hover,
-.links li a:active{
+nav ul li a:hover
+,nav ul li a.active
+{
     color: white;
-    padding: 0 5px 2px 0;
-    border-right:4px solid  #1a0222f7;
-    text-shadow: 2px 2px blueviolet ;
+    background-color:transparent   ;
+    padding: 4px 9px;
+   text-shadow: 0px 0px 15px whitesmoke;
+border-radius:30px ;
 }
 .hamburger{
     color:black;
@@ -57,7 +59,7 @@ nav{
         z-index: 2;
         
     }
-       .links{
+       .lk{
         margin: 0;
         position: fixed;
         display: flex;
@@ -66,7 +68,7 @@ nav{
         justify-content: space-evenly;
         gap:15px;
         height: auto;
-        top: -250%;
+        top: -350%;
         left: 0;
         width: 100%;
         padding: 30px;
@@ -77,7 +79,7 @@ nav{
         top: 70px;
         background-color: blue;
     }
-    .links li a{
+    .lk{
         display: block;
         text-align: center;
         color: aliceblue;
