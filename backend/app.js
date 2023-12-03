@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-const Villa = require("./models/villa.model");
 const Seller = require("./models/seller.model");
 const Property = require("./models/property.model");
 const bcrypt = require("bcrypt");
@@ -96,8 +95,8 @@ app.post("/adduser", async (req, res) => {
       phone: userParam.phone,
       email: userParam.email,
       password: hashedPassword,
-      seller: userParam.seller,
-      buyer: userParam.buyer,
+      // seller: userParam.seller,
+      // buyer: userParam.buyer,
       image: userParam.image,
     });
 
@@ -163,7 +162,7 @@ app.post("/addnewproperty", async (req,res) => {
     }    
     const property = new Property({
       property_id:  propertyparam.property_id,
-      name: propertyparam.name,
+      title: propertyparam.title,
       description: propertyparam.description,
       type:propertyparam.type,
       num_room: propertyparam.num_room,
@@ -208,22 +207,22 @@ app.put("/users/:id", (req, res) => {
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 
-app.get("/villas", async (req, res) => {
+app.get("/property", async (req, res) => {
   try {
-    const villas = await Villa.find({});
-    res.status(200).json(villas);
+    const Propertyes = await Property.find({});
+    res.status(200).json(Propertyes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-app.get("/villas/:position", async (req, res) => {
+app.get("/property/:position", async (req, res) => {
   try {
     // req id
     const position = req.params.position;
     // find by id in users
-    const villa = await Villa.find(position);
-    res.status(200).json(villa);
+    const propertyes = await property.find(position);
+    res.status(200).json(propertyes);
   } catch (error) {
     res.status(402).json({ message: error.message });
   }
