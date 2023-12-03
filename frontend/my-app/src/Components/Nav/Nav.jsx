@@ -20,6 +20,7 @@ function ResponsiveAppBar(props) {
         <nav>
           <dev className="navleft">
             <img src={logo} alt="logo" />
+           
           </dev>
           <dev className="navright">
             <ul className="links">
@@ -43,6 +44,7 @@ function ResponsiveAppBar(props) {
                 </NavLink>
               </li>
             </ul>
+         
             <dev className="hamburger">
               <DehazeIcon  className="hum" color='secondary'/>
               <dev className="nav-option Home">

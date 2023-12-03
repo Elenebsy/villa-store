@@ -6,7 +6,7 @@ list-style:none;}
 nav img{
     padding: 9px;
     background-color:transparent;
-    width:13rem;
+    width:10rem;
 }
 .links{
     display:  flex;
@@ -19,7 +19,7 @@ nav img{
     margin: 5px 10px;
 }
 nav{
-    height: 170px;
+    height: 111px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -53,6 +53,9 @@ border-radius:30px ;
     margin-right: 10px;
 }
 @media screen and (max-width:768px) {
+    nav img{
+        width: 9rem ;
+    }
     nav{
         position: relative;
         padding: 0 20px;
