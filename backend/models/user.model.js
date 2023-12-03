@@ -9,8 +9,7 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     phone: { type: String, required: true },
     image: { type: String, required: false },
-    seller: { type: Boolean, required: false },
-    buyer: { type: Boolean, required: false },
+    
   },
   {
     timestamps: true,
