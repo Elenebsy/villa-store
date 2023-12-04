@@ -1,8 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
+<<<<<<< HEAD
 const Villa = require("./models/villa.model");
 const Purchase = require("./models/purchase.model");
+=======
+const Seller = require("./models/seller.model");
+const Property = require("./models/property.model");
+>>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
 const bcrypt = require("bcrypt");
 
 const mongouri = "mongodb://localhost:27017/villas-store";
@@ -87,9 +92,9 @@ app.post("/adduser", async (req, res) => {
     // Hash the user's password before saving it
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
-
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
+      user_id:  userParam.user_id,
       fullName: userParam.fullName, // Make sure 'fullName' is provided
       user_id: userParam.user_id,
       phone: userParam.phone,
@@ -97,7 +102,11 @@ app.post("/adduser", async (req, res) => {
       password: hashedPassword,
       // seller: userParam.seller,
       // buyer: userParam.buyer,
+<<<<<<< HEAD
       // image: userParam.image,
+=======
+      image: userParam.image,
+>>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
     });
 
     // Save the user to the database
@@ -109,7 +118,89 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+// Record and Adding the data of new Seller person
+app.post("/addnewseller", async (req,res) => {
+  try {
+    const sellerparam = req.body;
+
+    // Check if the email is already in use
+    if (await Seller.findOne({ email: sellerparam.email })) {
+      return res.status(400).json({ message: "Email is already in use" });
+    }
+
+    // Hash the user's password before saving it
+    const saltRouns = 10;
+    const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
+    // Create a new User instance with the hashed password and 'fullName'
+    const seller = new Seller({
+      seller_id:  sellerparam.seller_id,
+      fullName: sellerparam.fullName, // Make sure 'fullName' is provided
+      name: sellerparam.name,
+      phone: sellerparam.phone,
+      email: sellerparam.email,
+      password: hashedPassword,
+      street: sellerparam.street,
+      city: sellerparam.city,
+      state: sellerparam.state,
+      zipCode: sellerparam.zipCode,
+    });
+
+    // Save the user to the database
+    await seller.save();
+
+    res.status(201).json({ message: "Seller added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
+/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+// Record and Adding the data of new Property
+app.post("/addnewproperty", async (req,res) => {
+  try {
+    const propertyparam = req.body;
+
+    // Check if the property has been published before
+    if (await Property.findOne({ property_id: propertyparam.property_id })) {
+      return res.status(400).json({ message: "This property has been published before" });
+    }    
+    const property = new Property({
+      property_id:  propertyparam.property_id,
+      title: propertyparam.title,
+      description: propertyparam.description,
+      type:propertyparam.type,
+      num_room: propertyparam.num_room,
+      num_Bedrooms: propertyparam.num_Bedrooms,
+      num_Bathrooms: propertyparam.num_Bathrooms,
+      num_Floors: propertyparam.num_Floors,
+      num_individuals: propertyparam.num_individuals,
+      address: propertyparam.address,
+      city: propertyparam.city,
+      state: propertyparam.state,
+      zipCode: propertyparam.zipCode,
+      features: propertyparam.features,
+      price: propertyparam.price,
+      status: propertyparam.status,
+      availabilityDate: propertyparam.availabilityDate,
+      images: propertyparam.images,
+    });
+    // Save the property to the database
+    await property.save();
+
+    res.status(201).json({ message: "Property added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
+
 // Assignment => add new route here to edit user info ???
+<<<<<<< HEAD
 app.put("/users/:id", async (req, res) => {
   try {
     const user_id = req.params.user_id;
@@ -145,6 +236,18 @@ app.put("/users/:id", async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: `Server error: ${error.message}` });
+=======
+app.put("/users/:id", (req, res) => {
+  const id = req.params.id;
+  const updatedUser = req.body;
+  const index = User.findIndex((user) => user.id === id);
+
+  if (index !== -1) {
+    User[index] = { ...User[index], ...updatedUser };
+    res.status(200).json(User[index]);
+  } else {
+    res.status(404).send("User not found");
+>>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   }
 });
 
@@ -271,22 +374,31 @@ app.put("/villa/:id", async (req, res) => {
   }
 });
 
-app.get("/villas", async (req, res) => {
+app.get("/property", async (req, res) => {
   try {
-    const villas = await Villa.find({});
-    res.status(200).json(villas);
+    const Propertyes = await Property.find({});
+    res.status(200).json(Propertyes);
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
 });
 
+<<<<<<< HEAD
 app.get("/villa/:id", async (req, res) => {
+=======
+app.get("/property/:position", async (req, res) => {
+>>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   try {
     // req id
     const villa_id = req.params.user_id;
     // find by id in users
+<<<<<<< HEAD
     const villa = await Villa.findOne(villa_id);
     res.status(200).json(villa);
+=======
+    const propertyes = await property.find(position);
+    res.status(200).json(propertyes);
+>>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   } catch (error) {
     res.status(402).json({ message: error.message });
   }
