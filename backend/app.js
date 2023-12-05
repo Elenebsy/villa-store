@@ -93,14 +93,11 @@ app.post("/adduser", async (req, res) => {
     const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
-      user_id:  userParam.user_id,
-      fullName: userParam.fullName, // Make sure 'fullName' is provided
       user_id: userParam.user_id,
+      fullName: userParam.fullName, // Make sure 'fullName' is provided
       phone: userParam.phone,
       email: userParam.email,
       password: hashedPassword,
-      // seller: userParam.seller,
-      // buyer: userParam.buyer,
       image: userParam.image,
 
     });
@@ -115,42 +112,47 @@ app.post("/adduser", async (req, res) => {
 });
 
 
-// Record and Adding the data of new Seller person
-// app.post("/addnewseller", async (req,res) => {
-//   try {
-//     const sellerparam = req.body;
+app.post("/addusers", async (req, res) => {
+  try {
+    const userParam = req.body;
+    let user_email_exist = []
+    // console.log(userParam)
+    for (let i = 0; i < userParam.length; i++) {
+      console.log(userParam[i]);
+      // // Hash the user's password before saving it
+      // Check if the email is already in use
+      if (!(await User.findOne({ email: userParam[i].email }))) {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(userParam[i].password, saltRounds);
+        // Create a new User instance with the hashed password and 'fullName'
+        const user = new User({
+          user_id: userParam[i].user_id,
+          fullName: userParam[i].fullName, // Make sure 'fullName' is provided
+          phone: userParam[i].phone,
+          email: userParam[i].email,
+          password: hashedPassword,
+          image: userParam[i].image,
 
-//     // Check if the email is already in use
-//     if (await Seller.findOne({ email: sellerparam.email })) {
-//       return res.status(400).json({ message: "Email is already in use" });
-//     }
+        });
 
-//     // Hash the user's password before saving it
-//     const saltRouns = 10;
-//     const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
-//     // Create a new User instance with the hashed password and 'fullName'
-//     const seller = new Seller({
-//       seller_id:  sellerparam.seller_id,
-//       fullName: sellerparam.fullName, // Make sure 'fullName' is provided
-//       name: sellerparam.name,
-//       phone: sellerparam.phone,
-//       email: sellerparam.email,
-//       password: hashedPassword,
-//       street: sellerparam.street,
-//       city: sellerparam.city,
-//       state: sellerparam.state,
-//       zipCode: sellerparam.zipCode,
-//     });
+        // Save the user to the database
+        await user.save();
+      } else {
+        user_email_exist.push(userParam[i])
+      }
 
-//     // Save the user to the database
-//     await seller.save();
+    }
+    // here print the users are exist in DB
+    if (user_email_exist) {
+      res.status(201).json({ users: user_email_exist, massege: "User is exist" });
+    }
 
-//     res.status(201).json({ message: "Seller added successfully" });
-//   } catch (err) {
-//     res.status(404).json({ message: "Server error: " + err.message });
-//   }
+    res.status(201).json({ message: "User added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+});
 
-// });
 
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -178,20 +180,20 @@ app.post("/reqmeeting", async (req, res) => {
 
 ////////////////////////////////////
 ////////////////////////////////////
-app.post("/addnewcard", async (req,res) => {
+app.post("/addnewcard", async (req, res) => {
   try {
     const cardyparam = req.body;
 
     const card = new Card({
       userId: cardyparam.userId,
-      cardName: cardyparam. cardName,
-      cardNumber:cardyparam. cardNumber,
+      cardName: cardyparam.cardName,
+      cardNumber: cardyparam.cardNumber,
       cvv: cardyparam.cvv,
       expirationDate: cardyparam.expirationDate,
-   
+
     });
     // Save the property to the database
-    await card .save();
+    await card.save();
 
     res.status(201).json({ message: "Card added successfully" });
   } catch (err) {
@@ -204,18 +206,18 @@ app.post("/addnewcard", async (req,res) => {
 ////////////////////////////////
 //////////////////////////////
 
-app.post("/addnewproperty", async (req,res) => {
+app.post("/addnewproperty", async (req, res) => {
   try {
     const propertyparam = req.body;
 
     // Check if the property has been published before
     if (await Property.findOne({ property_id: propertyparam.property_id })) {
       return res.status(400).json({ message: "This property has been published before" });
-    }    
+    }
     const property = new Property({
-      property_id:  propertyparam.property_id,
+      property_id: propertyparam.property_id,
       catagory: propertyparam.catagory,
-      Out_ttitle: propertyparam. Out_ttitle,
+      Out_ttitle: propertyparam.Out_ttitle,
       In_title: propertyparam.In_title,
       short_address: propertyparam.short_address,
       sale_type: propertyparam.sale_type,
@@ -224,10 +226,10 @@ app.post("/addnewproperty", async (req,res) => {
       street: propertyparam.street,
       city: propertyparam.city,
       state: propertyparam.state,
-      District:  propertyparam.District,
+      District: propertyparam.District,
       num_house: propertyparam.num_house,
       description: propertyparam.description,
-      type:propertyparam.type,
+      type: propertyparam.type,
       num_room: propertyparam.num_room,
       num_Bedrooms: propertyparam.num_Bedrooms,
       num_Bathrooms: propertyparam.num_Bathrooms,
@@ -240,7 +242,7 @@ app.post("/addnewproperty", async (req,res) => {
       images: propertyparam.images,
     });
     // Save the property to the database
-    await property .save();
+    await property.save();
 
     res.status(201).json({ message: "Property added successfully" });
   } catch (err) {
