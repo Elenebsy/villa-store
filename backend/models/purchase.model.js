@@ -3,11 +3,13 @@ const Schema = mongoose.Schema;
 
 const purchaseSchema = new Schema(
   {
-    userid: { type: mongoose.Schema.Types.ObjectId, required: true },
-    bookid: { type: mongoose.Schema.Types.ObjectId, required: true },
+    user_id: { type: String, required: true },
+    property_id: { type: String, required: true },
+    price: { type: Boolean, required: true },
   },
   {
     timestamps: true,
   }
 );
-module.exports = mongoose.model("purchaseSchema", purchaseSchema);
+
+module.exports = mongoose.model("purchase", purchaseSchema);
