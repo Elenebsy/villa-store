@@ -1,14 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-
+const Categories = require("./models/categories.model");
 const Property = require("./models/property.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri = "mongodb://localhost:27017/villa-store";
+const mongouri = "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
 
 // app service
 const app = express();
@@ -18,6 +18,49 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
   res.send("Hello World, from cs309");
+});
+app.get("/property/categories", async (req, res) => {
+  try {
+    const categories = await Categories.find({});
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+});
+
+
+app.get("/property/categories/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    // Query properties based on the provided category
+    const properties = await Property.find({ category: category });
+
+    if (properties.length === 0) {
+      return res.status(404).json({ message: "No properties found for the specified category." });
+    }
+
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
+app.get("/property/categories/:category/:property_id", async (req, res) => {
+  try {
+    const category = req.params.category;
+    const propertyId = req.params.property_id;
+
+    // Query a specific property within the specified category and property_id
+    const property = await Property.findOne({ category: category, property_id: propertyId });
+
+    if (!property) {
+      return res.status(404).json({ message: "Property not found for the specified category and property_id." });
+    }
+
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
 });
 
 app.get("/users", async (req, res) => {
@@ -157,7 +200,7 @@ app.post("/addusers", async (req, res) => {
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
-app.post("/reqmeeting", async (req, res) => {
+app.post("/requestmeeting", async (req, res) => {
   try {
     const meetingParam = req.body;
 
@@ -216,7 +259,7 @@ app.post("/addnewproperty", async (req, res) => {
     }
     const property = new Property({
       property_id: propertyparam.property_id,
-      catagory: propertyparam.catagory,
+      category: propertyparam.category,
       Out_ttitle: propertyparam.Out_ttitle,
       In_title: propertyparam.In_title,
       short_address: propertyparam.short_address,
@@ -266,46 +309,7 @@ app.put("/users/:id", (req, res) => {
   }
 });
 
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-app.post("/addvilla", async (req, res) => {
-  try {
-    const villaParam = req.body;
-
-    // Check if the email is already in use
-    if (await Villa.findOne({ villa_id: villaParam.villa_id })) {
-      return res.status(400).json({ message: "villa is already in use" });
-    }
-
-    // Hash the user's password before saving it
-
-    // Create a new User instance with the hashed password and 'fullName'
-    const villa = new Villa({
-      villa_id: villaParam.villa_id,
-      user_id: villaParam.user_id,
-      price: villaParam.price,
-      villa_adress: villaParam.villa_adress,
-      position: villaParam.position,
-      installment_price: villaParam.installment_price,
-      installment_period: villaParam.installment_period,
-      num_room: villaParam.num_room,
-      num_bedroom: villaParam.num_bedroom,
-      num_bathroom: villaParam.num_bathroom,
-      Num_individuals: villaParam.Num_individuals,
-      discount: villaParam.discount,
-      description: villaParam.description,
-      images: villaParam.images,
-    });
-
-    // Save the user to the database
-    await villa.save();
-
-    res.status(201).json({ message: "villa added successfully" });
-  } catch (err) {
-    res.status(404).json({ message: "Server error: " + err.message });
-  }
-});
-app.delete("/villa/:id", async (req, res) => {
+app.delete("/property/:id", async (req, res) => {
   try {
     const { villa_id } = req.params.villa_id;
 
@@ -323,7 +327,7 @@ app.delete("/villa/:id", async (req, res) => {
     res.status(403).json({ message: error.message });
   }
 });
-app.put("/villa/:id", async (req, res) => {
+app.put("/property/:id", async (req, res) => {
   try {
     const villa_id = req.params.villa_id;
     // find by id in users
@@ -389,7 +393,7 @@ app.put("/villa/:id", async (req, res) => {
   }
 });
 
-app.get("/property", async (req, res) => {
+app.get("/properties", async (req, res) => {
   try {
     const Propertyes = await Property.find({});
     res.status(200).json(Propertyes);
@@ -398,24 +402,19 @@ app.get("/property", async (req, res) => {
   }
 });
 
-app.get("/property/:position", async (req, res) => {
+app.get("/property/id", async (req, res) => {
   try {
-    // req id
-    const villa_id = req.params.user_id;
     // find by id in users
-    const propertyes = await property.find(position);
+    const propertyes = await Property.find(id);
     res.status(200).json(propertyes);
   } catch (error) {
     res.status(402).json({ message: error.message });
   }
 });
 
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/villas-store")
+  .connect("mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/")
 
   .then(() => {
     console.log("connected to MongoDB");
