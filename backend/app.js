@@ -8,7 +8,7 @@ const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri = "mongodb://localhost:27017/villa-store";
+const mongouri = "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
 
 // app service
 const app = express();
@@ -414,7 +414,7 @@ app.get("/property/id", async (req, res) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/villas-store")
+  .connect("mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/")
 
   .then(() => {
     console.log("connected to MongoDB");
