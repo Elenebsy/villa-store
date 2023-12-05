@@ -23,7 +23,6 @@ const propertySchema = new Schema(
     state: { type: String, required: true },
     num_house: { type: String, required: true },
     District: { type: String, required: true },
-    zipCode: { type: Number, required: false },
     Amenities: [{ type: String, required: false }], // (e.g., pool, garage, garden, Amenities: المميزات).
     price:{ type: Number, required: true },
     status:{type: String,required: true }, //(e.g., available, under contract, sold).
