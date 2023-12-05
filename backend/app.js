@@ -154,43 +154,6 @@ app.post("/addusers", async (req, res) => {
 });
 
 
-// Record and Adding the data of new Seller person
-// app.post("/addnewseller", async (req,res) => {
-//   try {
-//     const sellerparam = req.body;
-
-//     // Check if the email is already in use
-//     if (await Seller.findOne({ email: sellerparam.email })) {
-//       return res.status(400).json({ message: "Email is already in use" });
-//     }
-
-//     // Hash the user's password before saving it
-//     const saltRouns = 10;
-//     const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
-//     // Create a new User instance with the hashed password and 'fullName'
-//     const seller = new Seller({
-//       seller_id:  sellerparam.seller_id,
-//       fullName: sellerparam.fullName, // Make sure 'fullName' is provided
-//       name: sellerparam.name,
-//       phone: sellerparam.phone,
-//       email: sellerparam.email,
-//       password: hashedPassword,
-//       street: sellerparam.street,
-//       city: sellerparam.city,
-//       state: sellerparam.state,
-//       zipCode: sellerparam.zipCode,
-//     });
-
-//     // Save the user to the database
-//     await seller.save();
-
-//     res.status(201).json({ message: "Seller added successfully" });
-//   } catch (err) {
-//     res.status(404).json({ message: "Server error: " + err.message });
-//   }
-
-// });
-
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
 
