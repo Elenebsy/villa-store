@@ -1,11 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-const Villa = require("./models/villa.model");
-const Purchase = require("./models/purchase.model");
+
+const Property = require("./models/property.model");
+const Meeting = require("./models/meetingform.model");
+const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
-const mongouri = "mongodb://localhost:27017/villas-store";
+// const Seller = require("./models/seller.model");
+const mongouri = "mongodb://localhost:27017/villa-store";
+
 // app service
 const app = express();
 
@@ -87,9 +91,9 @@ app.post("/adduser", async (req, res) => {
     // Hash the user's password before saving it
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
-
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
+      user_id:  userParam.user_id,
       fullName: userParam.fullName, // Make sure 'fullName' is provided
       user_id: userParam.user_id,
       phone: userParam.phone,
@@ -97,7 +101,8 @@ app.post("/adduser", async (req, res) => {
       password: hashedPassword,
       // seller: userParam.seller,
       // buyer: userParam.buyer,
-      // image: userParam.image,
+      image: userParam.image,
+
     });
 
     // Save the user to the database
@@ -109,42 +114,153 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
-// Assignment => add new route here to edit user info ???
-app.put("/users/:id", async (req, res) => {
+
+// Record and Adding the data of new Seller person
+// app.post("/addnewseller", async (req,res) => {
+//   try {
+//     const sellerparam = req.body;
+
+//     // Check if the email is already in use
+//     if (await Seller.findOne({ email: sellerparam.email })) {
+//       return res.status(400).json({ message: "Email is already in use" });
+//     }
+
+//     // Hash the user's password before saving it
+//     const saltRouns = 10;
+//     const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
+//     // Create a new User instance with the hashed password and 'fullName'
+//     const seller = new Seller({
+//       seller_id:  sellerparam.seller_id,
+//       fullName: sellerparam.fullName, // Make sure 'fullName' is provided
+//       name: sellerparam.name,
+//       phone: sellerparam.phone,
+//       email: sellerparam.email,
+//       password: hashedPassword,
+//       street: sellerparam.street,
+//       city: sellerparam.city,
+//       state: sellerparam.state,
+//       zipCode: sellerparam.zipCode,
+//     });
+
+//     // Save the user to the database
+//     await seller.save();
+
+//     res.status(201).json({ message: "Seller added successfully" });
+//   } catch (err) {
+//     res.status(404).json({ message: "Server error: " + err.message });
+//   }
+
+// });
+
+/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+app.post("/reqmeeting", async (req, res) => {
   try {
-    const user_id = req.params.user_id;
-    // find by id in users
-    const user = await User.findOne(user_id);
+    const meetingParam = req.body;
 
-    if (!user) {
-      console.log(user);
-      return res.status(404).json({ message: "User not found" });
-    }
+    const meeting = new Meeting({
+      user_id: meetingParam.user_id,
+      fullName: meetingParam.fullName,
+      phone: meetingParam.phone,
+      Available_dates: meetingParam.Available_dates,
+      Available_times: meetingParam.Available_times,
+      Location: meetingParam.Location,
+    });
+    await meeting.save();
 
-    // Update user details if provided in the request body
-    if (req.body.fullName) {
-      user.fullName = req.body.fullName;
-    }
+    res.status(201).json({ message: "Meeting scheduled successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
-    if (req.body.email) {
-      user.email = req.body.email;
-    }
+////////////////////////////////////
+////////////////////////////////////
+app.post("/addnewcard", async (req,res) => {
+  try {
+    const cardyparam = req.body;
 
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
+    const card = new Card({
+      userId: cardyparam.userId,
+      cardName: cardyparam. cardName,
+      cardNumber:cardyparam. cardNumber,
+      cvv: cardyparam.cvv,
+      expirationDate: cardyparam.expirationDate,
+   
+    });
+    // Save the property to the database
+    await card .save();
 
-    if (req.body.phone) {
-      user.phone = req.body.phone;
-    }
-    // Add more fields as needed
+    res.status(201).json({ message: "Card added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
 
-    // Save the updated user
-    await user.save();
+});
 
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: `Server error: ${error.message}` });
+
+////////////////////////////////
+//////////////////////////////
+
+app.post("/addnewproperty", async (req,res) => {
+  try {
+    const propertyparam = req.body;
+
+    // Check if the property has been published before
+    if (await Property.findOne({ property_id: propertyparam.property_id })) {
+      return res.status(400).json({ message: "This property has been published before" });
+    }    
+    const property = new Property({
+      property_id:  propertyparam.property_id,
+      catagory: propertyparam.catagory,
+      Out_ttitle: propertyparam. Out_ttitle,
+      In_title: propertyparam.In_title,
+      short_address: propertyparam.short_address,
+      sale_type: propertyparam.sale_type,
+      size: propertyparam.size,
+      country: propertyparam.country,
+      street: propertyparam.street,
+      city: propertyparam.city,
+      state: propertyparam.state,
+      District:  propertyparam.District,
+      num_house: propertyparam.num_house,
+      description: propertyparam.description,
+      type:propertyparam.type,
+      num_room: propertyparam.num_room,
+      num_Bedrooms: propertyparam.num_Bedrooms,
+      num_Bathrooms: propertyparam.num_Bathrooms,
+      num_Floors: propertyparam.num_Floors,
+      num_individuals: propertyparam.num_individuals,
+      Amenities: propertyparam.Amenities,
+      price: propertyparam.price,
+      status: propertyparam.status,
+      availabilityDate: propertyparam.availabilityDate,
+      images: propertyparam.images,
+    });
+    // Save the property to the database
+    await property .save();
+
+    res.status(201).json({ message: "Property added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
+
+// Assignment => add new route here to edit user info ???
+
+app.put("/users/:id", (req, res) => {
+  const id = req.params.id;
+  const updatedUser = req.body;
+  const index = User.findIndex((user) => user.id === id);
+
+  if (index !== -1) {
+    User[index] = { ...User[index], ...updatedUser };
+    res.status(200).json(User[index]);
+  } else {
+    res.status(404).send("User not found");
   }
 });
 
@@ -271,22 +387,22 @@ app.put("/villa/:id", async (req, res) => {
   }
 });
 
-app.get("/villas", async (req, res) => {
+app.get("/property", async (req, res) => {
   try {
-    const villas = await Villa.find({});
-    res.status(200).json(villas);
+    const Propertyes = await Property.find({});
+    res.status(200).json(Propertyes);
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
 });
 
-app.get("/villa/:id", async (req, res) => {
+app.get("/property/:position", async (req, res) => {
   try {
     // req id
     const villa_id = req.params.user_id;
     // find by id in users
-    const villa = await Villa.findOne(villa_id);
-    res.status(200).json(villa);
+    const propertyes = await property.find(position);
+    res.status(200).json(propertyes);
   } catch (error) {
     res.status(402).json({ message: error.message });
   }
