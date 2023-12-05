@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const propertySchema = new Schema(
   {
-    user_id: { type: String,required: true },
+    // user_id: { type: String,required: true },
     property_id: { type: Number, unique: true, required: true },
-    catagory:{type: String,required: true },
+    category:{type: String,required: true },
     Out_ttitle:{type: String,required: true }, // (e.g Before clicking on property card)
     In_title:{type: String,required: true }, // (e.g After clicking on property card)
     description: {type: String, required: true}, 
@@ -27,7 +27,7 @@ const propertySchema = new Schema(
     Amenities: [{ type: String, required: false }], // (e.g., pool, garage, garden, Amenities: المميزات).
     price:{ type: Number, required: true },
     status:{type: String,required: true }, //(e.g., available, under contract, sold).
-    availabilityDate:{type: Date,required: true }, // The date when the property will be available.
+    availabilityDate:{type: String ,required: true }, // The date when the property will be available.
     images: [{ type: String, required: true }], // Array of image URLs
     },
   {
