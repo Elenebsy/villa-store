@@ -4,9 +4,11 @@ import { BrowserRouter as Router, Routes, Route, createBrowserRouter, RouterProv
 import About from './Components/Pages/About.js';
 import Contact from './Components/Pages/Contact.js';
 import Login from './Components/Pages/Login.js';
-import Register from './Components/Pages/Register.js';
 import Home from './Components/Pages/Home.js';
 import Layout from './Components/Layout';
+import SignUp from './Components/Pages/SignUp.js';
+
+
 const pages = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
@@ -14,16 +16,16 @@ const pages = createBrowserRouter(
       <Route path="/about" element={<About />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/register" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
     </Route>
   )
 )
 function App() {
   return (
-    <div>
+<>
       <RouterProvider router={pages}></RouterProvider>
-    </div>
+      </> 
   );
 }
 
