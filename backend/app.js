@@ -1,16 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-<<<<<<< HEAD
-const Villa = require("./models/villa.model");
-const Purchase = require("./models/purchase.model");
-=======
-const Seller = require("./models/seller.model");
+
 const Property = require("./models/property.model");
->>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
+const Meeting = require("./models/meetingform.model");
+const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
-const mongouri = "mongodb://localhost:27017/villas-store";
+// const Seller = require("./models/seller.model");
+const mongouri = "mongodb://localhost:27017/villa-store";
+
 // app service
 const app = express();
 
@@ -102,11 +101,8 @@ app.post("/adduser", async (req, res) => {
       password: hashedPassword,
       // seller: userParam.seller,
       // buyer: userParam.buyer,
-<<<<<<< HEAD
-      // image: userParam.image,
-=======
       image: userParam.image,
->>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
+
     });
 
     // Save the user to the database
@@ -118,49 +114,96 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
-////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
 
 // Record and Adding the data of new Seller person
-app.post("/addnewseller", async (req,res) => {
+// app.post("/addnewseller", async (req,res) => {
+//   try {
+//     const sellerparam = req.body;
+
+//     // Check if the email is already in use
+//     if (await Seller.findOne({ email: sellerparam.email })) {
+//       return res.status(400).json({ message: "Email is already in use" });
+//     }
+
+//     // Hash the user's password before saving it
+//     const saltRouns = 10;
+//     const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
+//     // Create a new User instance with the hashed password and 'fullName'
+//     const seller = new Seller({
+//       seller_id:  sellerparam.seller_id,
+//       fullName: sellerparam.fullName, // Make sure 'fullName' is provided
+//       name: sellerparam.name,
+//       phone: sellerparam.phone,
+//       email: sellerparam.email,
+//       password: hashedPassword,
+//       street: sellerparam.street,
+//       city: sellerparam.city,
+//       state: sellerparam.state,
+//       zipCode: sellerparam.zipCode,
+//     });
+
+//     // Save the user to the database
+//     await seller.save();
+
+//     res.status(201).json({ message: "Seller added successfully" });
+//   } catch (err) {
+//     res.status(404).json({ message: "Server error: " + err.message });
+//   }
+
+// });
+
+/////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+app.post("/reqmeeting", async (req, res) => {
   try {
-    const sellerparam = req.body;
+    const meetingParam = req.body;
 
-    // Check if the email is already in use
-    if (await Seller.findOne({ email: sellerparam.email })) {
-      return res.status(400).json({ message: "Email is already in use" });
-    }
-
-    // Hash the user's password before saving it
-    const saltRouns = 10;
-    const hashedPassword = await bcrypt.hash(sellerparam.password, saltRouns);
-    // Create a new User instance with the hashed password and 'fullName'
-    const seller = new Seller({
-      seller_id:  sellerparam.seller_id,
-      fullName: sellerparam.fullName, // Make sure 'fullName' is provided
-      name: sellerparam.name,
-      phone: sellerparam.phone,
-      email: sellerparam.email,
-      password: hashedPassword,
-      street: sellerparam.street,
-      city: sellerparam.city,
-      state: sellerparam.state,
-      zipCode: sellerparam.zipCode,
+    const meeting = new Meeting({
+      user_id: meetingParam.user_id,
+      fullName: meetingParam.fullName,
+      phone: meetingParam.phone,
+      Available_dates: meetingParam.Available_dates,
+      Available_times: meetingParam.Available_times,
+      Location: meetingParam.Location,
     });
+    await meeting.save();
 
-    // Save the user to the database
-    await seller.save();
+    res.status(201).json({ message: "Meeting scheduled successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
-    res.status(201).json({ message: "Seller added successfully" });
+////////////////////////////////////
+////////////////////////////////////
+app.post("/addnewcard", async (req,res) => {
+  try {
+    const cardyparam = req.body;
+
+    const card = new Card({
+      userId: cardyparam.userId,
+      cardName: cardyparam. cardName,
+      cardNumber:cardyparam. cardNumber,
+      cvv: cardyparam.cvv,
+      expirationDate: cardyparam.expirationDate,
+   
+    });
+    // Save the property to the database
+    await card .save();
+
+    res.status(201).json({ message: "Card added successfully" });
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
 
 });
-/////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
 
-// Record and Adding the data of new Property
+
+////////////////////////////////
+//////////////////////////////
+
 app.post("/addnewproperty", async (req,res) => {
   try {
     const propertyparam = req.body;
@@ -171,7 +214,18 @@ app.post("/addnewproperty", async (req,res) => {
     }    
     const property = new Property({
       property_id:  propertyparam.property_id,
-      title: propertyparam.title,
+      catagory: propertyparam.catagory,
+      Out_ttitle: propertyparam. Out_ttitle,
+      In_title: propertyparam.In_title,
+      short_address: propertyparam.short_address,
+      sale_type: propertyparam.sale_type,
+      size: propertyparam.size,
+      country: propertyparam.country,
+      street: propertyparam.street,
+      city: propertyparam.city,
+      state: propertyparam.state,
+      District:  propertyparam.District,
+      num_house: propertyparam.num_house,
       description: propertyparam.description,
       type:propertyparam.type,
       num_room: propertyparam.num_room,
@@ -179,18 +233,14 @@ app.post("/addnewproperty", async (req,res) => {
       num_Bathrooms: propertyparam.num_Bathrooms,
       num_Floors: propertyparam.num_Floors,
       num_individuals: propertyparam.num_individuals,
-      address: propertyparam.address,
-      city: propertyparam.city,
-      state: propertyparam.state,
-      zipCode: propertyparam.zipCode,
-      features: propertyparam.features,
+      Amenities: propertyparam.Amenities,
       price: propertyparam.price,
       status: propertyparam.status,
       availabilityDate: propertyparam.availabilityDate,
       images: propertyparam.images,
     });
     // Save the property to the database
-    await property.save();
+    await property .save();
 
     res.status(201).json({ message: "Property added successfully" });
   } catch (err) {
@@ -200,43 +250,7 @@ app.post("/addnewproperty", async (req,res) => {
 });
 
 // Assignment => add new route here to edit user info ???
-<<<<<<< HEAD
-app.put("/users/:id", async (req, res) => {
-  try {
-    const user_id = req.params.user_id;
-    // find by id in users
-    const user = await User.findOne(user_id);
 
-    if (!user) {
-      console.log(user);
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Update user details if provided in the request body
-    if (req.body.fullName) {
-      user.fullName = req.body.fullName;
-    }
-
-    if (req.body.email) {
-      user.email = req.body.email;
-    }
-
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-
-    if (req.body.phone) {
-      user.phone = req.body.phone;
-    }
-    // Add more fields as needed
-
-    // Save the updated user
-    await user.save();
-
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: `Server error: ${error.message}` });
-=======
 app.put("/users/:id", (req, res) => {
   const id = req.params.id;
   const updatedUser = req.body;
@@ -247,7 +261,6 @@ app.put("/users/:id", (req, res) => {
     res.status(200).json(User[index]);
   } else {
     res.status(404).send("User not found");
->>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   }
 });
 
@@ -383,22 +396,13 @@ app.get("/property", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-app.get("/villa/:id", async (req, res) => {
-=======
 app.get("/property/:position", async (req, res) => {
->>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   try {
     // req id
     const villa_id = req.params.user_id;
     // find by id in users
-<<<<<<< HEAD
-    const villa = await Villa.findOne(villa_id);
-    res.status(200).json(villa);
-=======
     const propertyes = await property.find(position);
     res.status(200).json(propertyes);
->>>>>>> e429a7ff6bb5c33ed3482b6da69bb205ea839c99
   } catch (error) {
     res.status(402).json({ message: error.message });
   }
