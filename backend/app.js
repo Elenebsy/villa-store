@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-
+const Purchase = require("./models/purchase.model");
 const Property = require("./models/property.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");
@@ -407,6 +407,75 @@ app.get("/property/:position", async (req, res) => {
     res.status(402).json({ message: error.message });
   }
 });
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+// get all purchase
+app.get("/allpurchase", async (req, res) => {
+  try {
+    const purchase = await Purchase.find({});
+    res.status(200).json(purchase);
+  } catch (error) {
+    res.status(403).json({ message: error.message });
+  }
+})
+// get all purchase of a user
+app.get("/purchaseByUserId/:user_id", async (req, res) => {
+  try {
+    // req id
+    const user_id = req.params.user_id;
+    // find by id in users
+    const purchase = await Purchase.find({user_id});
+    res.status(200).json(purchase);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+})
+// get the purchase of a property
+app.get("/purchaseByPropertyId/:property_id", async (req, res) => {
+  try {
+    // req id
+    const property_id = req.params.property_id;
+    // find by id in users
+    const purchase = await Purchase.findOne({property_id});
+    res.status(200).json(purchase);
+  } catch (error) {
+    res.status(405).json({ message: error.message });
+  }
+})
+//post a purchase
+app.post("/addPurchase", async (req, res) => {
+  try {
+    const purchaseparams = req.body;
+  
+    const purchase = new Purchase({
+      user_id: purchaseparams.user_id,
+      property_id: purchaseparams.property_id,
+   
+    });
+      // Save the property to the database
+      await purchase.save();
+  
+      res.status(201).json({ message: "purchase added successfully" });
+  } catch (error) {
+    res.status(406).json({ message: error.message });
+  }
+})
+// delete a purchase
+app.delete("/deletePurchase/:property_id", async (req, res) => {
+  try {
+    const property_id = req.params.property_id;
+    const deletePurchase = await Purchase.findOne({property_id});
+    if (!deletePurchase) {
+      return res.status(404).json({ message: "Purchase not found" });
+    }
+    await Purchase.deleteOne({property_id});
+    res.status(200).json({ message: "Purchase deleted successfully" });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+})
+
+
 
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -425,3 +494,7 @@ mongoose
   });
   // this is my comment
   // this is my second coment
+
+
+
+ 

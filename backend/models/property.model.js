@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const propertySchema = new Schema(
   {
     property_id: { type: Number, unique: true, required: true },
+    user_id: { type: String,  required: true },
     catagory:{type: String,required: true },
     Out_ttitle:{type: String,required: true }, // (e.g Before clicking on property card)
     In_title:{type: String,required: true }, // (e.g After clicking on property card)
