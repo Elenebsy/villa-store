@@ -8,7 +8,6 @@ const CardSchema = new Schema(
     cardNumber: { type: String, required: true },
     cvv: { type: String, required: true },
     expirationDate: { type: String, required: true },
-
   },
   {
     timestamps: true,
