@@ -13,6 +13,9 @@ import Login from "./Components/Pages/Login.js";
 import Home from "./Components/Pages/Home.js";
 import Layout from "./Components/Layout";
 import SignUp from "./Components/Pages/SignUp.js";
+import Cart from "./Components/Pages/Cart.jsx";
+import Houses from "./Components/Categories/Houses.jsx";
+import Apartments from "./Components/Categories/Apartments.jsx";
 
 const pages = createBrowserRouter(
   createRoutesFromElements(
