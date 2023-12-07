@@ -28,7 +28,7 @@ const propertySchema = new Schema(
     price:{ type: Number, required: true },
     status:{type: String,required: true }, //(e.g., available, under contract, sold).
     availabilityDate:{type: String ,required: true }, // The date when the property will be available.
-    images: [{ type: String, required: true }], // Array of image URLs
+    image1: { type: String, required: true }, // Array of image URLs
     },
   {
     timestamps: true,

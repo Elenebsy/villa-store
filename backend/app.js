@@ -282,7 +282,7 @@ app.post("/addnewproperty", async (req, res) => {
       price: propertyparam.price,
       status: propertyparam.status,
       availabilityDate: propertyparam.availabilityDate,
-      images: propertyparam.images,
+      image1: propertyparam.image1,
     });
     // Save the property to the database
     await property.save();
@@ -393,15 +393,14 @@ app.put("/property/:id", async (req, res) => {
   }
 });
 
-app.get("/properties", async (req, res) => {
+app.get('/properties', async (req, res) => {
   try {
-    const Propertyes = await Property.find({});
-    res.status(200).json(Propertyes);
+    const properties = await Property.find();
+    res.json(properties);
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 app.get("/property/id", async (req, res) => {
   try {
     // find by id in users
