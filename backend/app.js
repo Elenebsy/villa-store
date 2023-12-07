@@ -8,7 +8,8 @@ const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri = "fd";
+const mongouri =
+  "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
 
 // app service
 const app = express();
@@ -58,10 +59,12 @@ app.get("/property/categories/:category/:property_id", async (req, res) => {
     });
 
     if (!property) {
-      return res.status(404).json({
-        message:
-          "Property not found for the specified category and property_id.",
-      });
+      return res
+        .status(404)
+        .json({
+          message:
+            "Property not found for the specified category and property_id.",
+        });
     }
 
     res.status(200).json(property);
@@ -109,24 +112,7 @@ app.get("/users/email/:email", async (req, res) => {
     res.status(402).json({ message: "Internal Server Error" });
   }
 });
-// get for log in and unhashing password
-// app.get("/users/login", async (req, res) => {
-//   try {
-//     const user_param = req.body;
-//     const user = await User.findOne({ email: userParam.email });
-//     if (await User.findOne({ email: userParam.email })) {
-//       return res.status(400).json({ message: "Email is already in use" });
-//     }
-//     const hashedPassword = user.password;
-//     const isMatch = await bcrypt.compare(userParam.password, hashedPassword);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: "Invalid credentials" });
-//     }
-//     res.status(200).json({ message: "User logged in successfully" });
-//   } catch (error) {
-//     res.status(402).json({ message: error.message });
-//   }
-// });
+
 app.delete("/users/:id", async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -139,8 +125,7 @@ app.delete("/users/:id", async (req, res) => {
         .status(404)
         .json({ message: `Cannot find any user with ID ${id}` });
     }
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(403).json({ message: error.message });
