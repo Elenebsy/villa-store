@@ -5,32 +5,54 @@ import Login from './Login.js';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom"
 import {
-  Avatar,
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  CssBaseline,
-  FormControlLabel,
-  Grid,
-  Link,
-  TextField,
-  Typography,
+ Avatar,
+ Box,
+ Button,
+ Checkbox,
+ Container,
+ CssBaseline,
+ FormControlLabel,
+ Grid,
+ Link,
+ TextField,
+ Typography,
 } from "@mui/material";
 
 import { createTheme ,ThemeProvider} from '@mui/material/styles';
-
-
+async function addUser(userData) {
+ try {
+     const response = await axios.post('http://127.0.0.1:5000/adduser', userData);
+     console.log(response.data);
+ } catch (error) {
+     console.error('Error:', error);
+ }
+ }
 const theme = createTheme({
-  palette: {
+ palette: {
     primary: {
       main: '#7b1fa2',
     },
     secondary: {
       main: '#673ab7',
     },
-  },
+ },
 });
+
+
+export default function SignUp() {
+ const [fullName, setnameState] = useState("");
+ const [email, setemailState] = useState("");
+ const [password, setpasswordState] = useState("");
+ const [phone, setphoneState] = useState("");
+
+ const handleButtonClick = async () => {
+    await addUser({
+      fullName: fullName,
+      email: email,
+      password: password,
+      phone: phone
+    });
+ };
 createBrowserRouter(
   createRoutesFromElements(
     <Route path="/"element={<About/>}>
@@ -42,19 +64,9 @@ createBrowserRouter(
   )
 )
 
-export default function SignUp() {
-const [name,setnameState]=useState("");
-const [email,setemailState]=useState("");
-const [password,setpasswordState]=useState("");
-const [phone,setphoneState]=useState("");
-const handleSubmet = (e)=>{
-  e.preventDefault();
-axios.post('',{name,email,password:password})
-.then(result=>console.log(result)).catch(err =>console.log(err))
-}
 return (
     <ThemeProvider theme={theme}>
- <form onSubmit={handleSubmet}>
+ <form>
     <Container component="main" maxWidth="xs">
     
       <CssBaseline />
@@ -128,7 +140,8 @@ return (
             //onChange={handleChange}
             onChange={(e)=>setphoneState(e.target.value)}
           />
-        
+        <Button onClick={handleButtonClick} type="submit" sx={{ marginTop: 3 }} color="primary" variant="outlined" size="large">SignUp</Button>
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
@@ -138,21 +151,7 @@ return (
               {"Please enter email and password."}
             </Box>
           )} */}
-<Box  sx={{
-          marginTop: 3,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center", 
-        }}>
-<Button 
 
-   type="submet"
-   sx={ {borderRadius:5}} 
-  color="primary"
-  variant="outlined"
-  size="large">SignUp</Button> 
-      
-</Box>
           {/* {!!error && <Box sx={{ color: "red" }}>{error.message}</Box>} */}
           
           <Grid container>
