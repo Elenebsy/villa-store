@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { NavLink } from "react-router-dom";
 import { createTheme } from '@mui/material/styles';
 import "../Categories/CategoryTitleDesign.css";
+
 export default class Home extends Component {
   render() {
     return (
       <div className="HomeBody">
+        <div className='headings'>
+          <div className="scontainer">
+            <h1 className="intro-text">Find your dream home today!</h1>
+          </div>
+        </div>
         <div className="category">
           <div className="categoryTitle">
             <ul className="link">
@@ -23,16 +28,6 @@ export default class Home extends Component {
           </div>
         </div>
       </div>
-=======
-import Slider from '../slider/Slider.jsx';
-export default class Home extends Component {
-  render() {
-    return (
-      <>
-      <Slider/>
-      <dev>he</dev>
-      </>
->>>>>>> ac4ffe532fc14e378cf6f3da3d81ad6022f64b4b
-    )
+    );
   }
 }
