@@ -8,8 +8,7 @@ const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri =
-  "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
+const mongouri = "fd";
 
 // app service
 const app = express();
