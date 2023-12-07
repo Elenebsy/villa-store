@@ -1,9 +1,10 @@
 import React from "react";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import logo from "../Assets/cas.png";
-import {NavLink} from "react-router-dom"
+import {NavLink} from "react-router-dom";
 import "./nav.css";
 import { createTheme } from '@mui/material/styles';
+import { ShoppingCart} from "phosphor-react";
 const theme = createTheme({
   palette: {
     ochre: {
@@ -42,6 +43,11 @@ function ResponsiveAppBar(props) {
                 <NavLink to="/register"className="lk">
                   Sign Up
                 </NavLink>
+              </li>
+              <li>
+              <NavLink to="/cart"className="lk">
+                <ShoppingCart size = {32}/>
+              </NavLink>
               </li>
             </ul>
          
