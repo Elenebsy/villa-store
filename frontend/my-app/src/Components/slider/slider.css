@@ -1,0 +1,15 @@
+.slider-container {
+    width: 100%;
+    max-width: 600px; /* Adjust the maximum width as needed */
+    margin: auto;
+    overflow: hidden;
+  }
+  
+  img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Optional: Add additional styles for better aesthetics */
+  

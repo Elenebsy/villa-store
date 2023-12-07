@@ -18,6 +18,10 @@
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.20.0",
     "react-scripts": "^5.0.1",
+<<<<<<< HEAD
+=======
+    "react-slideshow-image": "^4.3.0",
+>>>>>>> ac4ffe532fc14e378cf6f3da3d81ad6022f64b4b
     "styled-components": "^6.1.1",
     "web-vitals": "^2.1.4"
   },
