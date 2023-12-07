@@ -44,9 +44,14 @@ const propertySchema = new Schema(
     price:{ type: Number, required: true },
     status:{type: String,required: true }, //(e.g., available, under contract, sold).
     availabilityDate:{type: String ,required: true }, // The date when the property will be available.
+<<<<<<< HEAD
 >>>>>>> 65578101951bdc60c72fb68252d320e826f9a9ee
     images: [{ type: String, required: true }], // Array of image URLs
   },
+=======
+    image1: { type: String, required: true }, // Array of image URLs
+    },
+>>>>>>> origin/Merging-here
   {
     timestamps: true,
   }
