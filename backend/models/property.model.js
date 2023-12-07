@@ -5,24 +5,13 @@ const propertySchema = new Schema(
   {
     // user_id: { type: String,required: true },
     property_id: { type: Number, unique: true, required: true },
-<<<<<<< HEAD
-    user_id: { type: String, required: true },
-    catagory: { type: String, required: true },
+    category: { type: String, required: true },
     Out_ttitle: { type: String, required: true }, // (e.g Before clicking on property card)
     In_title: { type: String, required: true }, // (e.g After clicking on property card)
     description: { type: String, required: true },
     short_address: { type: String, required: true }, // (e.g Zed2000 , Mostakbal City, Egypt)
     type: { type: String, required: true }, //(e.g., house, apartment, commercial)
     sale_type: { type: String, required: true }, //(e.g.,Sale by Owner,Distressed Sale, Leasehold Sale, Probate Sale, Auction, Developer Sale, Resale)
-=======
-    category:{type: String,required: true },
-    Out_ttitle:{type: String,required: true }, // (e.g Before clicking on property card)
-    In_title:{type: String,required: true }, // (e.g After clicking on property card)
-    description: {type: String, required: true}, 
-    short_address:{type: String, required: true}, // (e.g Zed2000 , Mostakbal City, Egypt)
-    type:{type: String,required: true }, //(e.g., house, apartment, commercial)
-    sale_type:{type: String,required: true }, //(e.g.,Sale by Owner,Distressed Sale, Leasehold Sale, Probate Sale, Auction, Developer Sale, Resale)
->>>>>>> 65578101951bdc60c72fb68252d320e826f9a9ee
     num_room: { type: Number, required: true },
     num_Bedrooms: { type: Number, required: true },
     num_Bathrooms: { type: Number, required: true },
@@ -36,22 +25,12 @@ const propertySchema = new Schema(
     num_house: { type: String, required: true },
     District: { type: String, required: true },
     Amenities: [{ type: String, required: false }], // (e.g., pool, garage, garden, Amenities: المميزات).
-<<<<<<< HEAD
     price: { type: Number, required: true },
     status: { type: String, required: true }, //(e.g., available, under contract, sold).
     availabilityDate: { type: Date, required: true }, // The date when the property will be available.
-=======
-    price:{ type: Number, required: true },
-    status:{type: String,required: true }, //(e.g., available, under contract, sold).
-    availabilityDate:{type: String ,required: true }, // The date when the property will be available.
-<<<<<<< HEAD
->>>>>>> 65578101951bdc60c72fb68252d320e826f9a9ee
     images: [{ type: String, required: true }], // Array of image URLs
   },
-=======
-    image1: { type: String, required: true }, // Array of image URLs
-    },
->>>>>>> origin/Merging-here
+
   {
     timestamps: true,
   }

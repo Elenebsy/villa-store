@@ -59,12 +59,10 @@ app.get("/property/categories/:category/:property_id", async (req, res) => {
     });
 
     if (!property) {
-      return res
-        .status(404)
-        .json({
-          message:
-            "Property not found for the specified category and property_id.",
-        });
+      return res.status(404).json({
+        message:
+          "Property not found for the specified category and property_id.",
+      });
     }
 
     res.status(200).json(property);
