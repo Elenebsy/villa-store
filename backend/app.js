@@ -8,7 +8,8 @@ const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri = "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
+const mongouri =
+  "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
 
 // app service
 const app = express();
@@ -28,7 +29,6 @@ app.get("/property/categories", async (req, res) => {
   }
 });
 
-
 app.get("/property/categories/:category", async (req, res) => {
   try {
     const category = req.params.category;
@@ -37,7 +37,9 @@ app.get("/property/categories/:category", async (req, res) => {
     const properties = await Property.find({ category: category });
 
     if (properties.length === 0) {
-      return res.status(404).json({ message: "No properties found for the specified category." });
+      return res
+        .status(404)
+        .json({ message: "No properties found for the specified category." });
     }
 
     res.status(200).json(properties);
@@ -51,10 +53,16 @@ app.get("/property/categories/:category/:property_id", async (req, res) => {
     const propertyId = req.params.property_id;
 
     // Query a specific property within the specified category and property_id
-    const property = await Property.findOne({ category: category, property_id: propertyId });
+    const property = await Property.findOne({
+      category: category,
+      property_id: propertyId,
+    });
 
     if (!property) {
-      return res.status(404).json({ message: "Property not found for the specified category and property_id." });
+      return res.status(404).json({
+        message:
+          "Property not found for the specified category and property_id.",
+      });
     }
 
     res.status(200).json(property);
@@ -102,7 +110,24 @@ app.get("/users/email/:email", async (req, res) => {
     res.status(402).json({ message: "Internal Server Error" });
   }
 });
-
+// get for log in and unhashing password
+app.get("/users/login", async (req, res) => {
+  try {
+    const user_param = req.body;
+    const user = await User.findOne({ email: userParam.email });
+    if (await User.findOne({ email: userParam.email })) {
+      return res.status(400).json({ message: "Email is already in use" });
+    }
+    const hashedPassword = user.password;
+    const isMatch = await bcrypt.compare(userParam.password, hashedPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+    res.status(200).json({ message: "User logged in successfully" });
+  } catch (error) {
+    res.status(402).json({ message: error.message });
+  }
+});
 app.delete("/users/:id", async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -115,7 +140,8 @@ app.delete("/users/:id", async (req, res) => {
         .status(404)
         .json({ message: `Cannot find any user with ID ${id}` });
     }
-
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(403).json({ message: error.message });
@@ -142,7 +168,6 @@ app.post("/adduser", async (req, res) => {
       email: userParam.email,
       password: hashedPassword,
       image: userParam.image,
-
     });
 
     // Save the user to the database
@@ -154,11 +179,10 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
-
 app.post("/addusers", async (req, res) => {
   try {
     const userParam = req.body;
-    let user_email_exist = []
+    let user_email_exist = [];
     // console.log(userParam)
     for (let i = 0; i < userParam.length; i++) {
       console.log(userParam[i]);
@@ -166,7 +190,10 @@ app.post("/addusers", async (req, res) => {
       // Check if the email is already in use
       if (!(await User.findOne({ email: userParam[i].email }))) {
         const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(userParam[i].password, saltRounds);
+        const hashedPassword = await bcrypt.hash(
+          userParam[i].password,
+          saltRounds
+        );
         // Create a new User instance with the hashed password and 'fullName'
         const user = new User({
           user_id: userParam[i].user_id,
@@ -175,19 +202,19 @@ app.post("/addusers", async (req, res) => {
           email: userParam[i].email,
           password: hashedPassword,
           image: userParam[i].image,
-
         });
 
         // Save the user to the database
         await user.save();
       } else {
-        user_email_exist.push(userParam[i])
+        user_email_exist.push(userParam[i]);
       }
-
     }
     // here print the users are exist in DB
     if (user_email_exist) {
-      res.status(201).json({ users: user_email_exist, massege: "User is exist" });
+      res
+        .status(201)
+        .json({ users: user_email_exist, massege: "User is exist" });
     }
 
     res.status(201).json({ message: "User added successfully" });
@@ -195,7 +222,6 @@ app.post("/addusers", async (req, res) => {
     res.status(404).json({ message: "Server error: " + err.message });
   }
 });
-
 
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -233,7 +259,6 @@ app.post("/addnewcard", async (req, res) => {
       cardNumber: cardyparam.cardNumber,
       cvv: cardyparam.cvv,
       expirationDate: cardyparam.expirationDate,
-
     });
     // Save the property to the database
     await card.save();
@@ -242,9 +267,7 @@ app.post("/addnewcard", async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
-
 });
-
 
 ////////////////////////////////
 //////////////////////////////
@@ -255,7 +278,9 @@ app.post("/addnewproperty", async (req, res) => {
 
     // Check if the property has been published before
     if (await Property.findOne({ property_id: propertyparam.property_id })) {
-      return res.status(400).json({ message: "This property has been published before" });
+      return res
+        .status(400)
+        .json({ message: "This property has been published before" });
     }
     const property = new Property({
       property_id: propertyparam.property_id,
@@ -291,7 +316,6 @@ app.post("/addnewproperty", async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
-
 });
 
 // Assignment => add new route here to edit user info ???
@@ -414,7 +438,9 @@ app.get("/property/id", async (req, res) => {
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/")
+  .connect(
+    "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/"
+  )
 
   .then(() => {
     console.log("connected to MongoDB");
