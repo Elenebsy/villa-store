@@ -1,8 +1,11 @@
 import React from 'react'
 
+
 const Apartments = () => {
   return (
-    <div>Apartments</div>
+    <div>
+      {/* <img src='/property1.jpeg' alt ="here is the image"/> */}
+    </div>
   )
 }
 
