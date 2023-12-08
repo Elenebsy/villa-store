@@ -314,11 +314,9 @@ app.post("/addnewproperty", async (req,res) => {
       return res.status(400).json({ message: "This property has been published before" });
     }    
     const property = new Property({
-
       property_id: propertyparam.property_id,
       category: propertyparam.category,
       Out_ttitle: propertyparam.Out_ttitle,
-
       In_title: propertyparam.In_title,
       short_address: propertyparam.short_address,
       sale_type: propertyparam.sale_type,
