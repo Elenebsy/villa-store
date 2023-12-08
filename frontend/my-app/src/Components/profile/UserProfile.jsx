@@ -1,18 +1,15 @@
-// UserProfile.js
+// EditProfile.js
 
-import React from 'react';
-import { Container, Grid, Paper, Avatar, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Grid, Card, Avatar, Button, TextField, Input } from '@mui/material';
 import { styled } from '@mui/system';
 
-const StyledContainer = styled(Container)({
+const StyledCard = styled(Card)({
   display: 'flex',
-  alignItems: 'top',
-  justifyContent: 'center',
-  height: '100vh',
-  marginTop: '1vh'
-});
-
-const StyledPaper = styled(Paper)({
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
   padding: '16px',
   textAlign: 'center',
   color: 'black',
@@ -21,69 +18,144 @@ const StyledPaper = styled(Paper)({
 const StyledAvatar = styled(Avatar)({
   width: '80px',
   height: '80px',
-  marginBottom: '16px',
-  alignSelf: 'center', // Align the avatar in the middle of the left column
-  position: 'relative',
-  left: '42%',
-  
+  marginTop: '16px',
 });
 
 const StyledButton = styled(Button)({
   marginTop: '16px',
 });
 
-const UserProfile = () => {
-  const profileData = {
-    name: 'John Doe',
-    phone: '+1234567890',
-    email: 'john.doe@example.com',
-    imageSrc: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+const EditProfile = () => {
+  const [profileData, setProfileData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    address: '',
+    imageSrc: '',
+    // Add a property for the date
+    date: '',
+  });
+
+  useEffect(() => {
+    // Fetch user profile data from the backend when the component mounts
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/users/email/ali@ali.com');
+        setProfileData(response.data);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []); // Empty dependency array ensures the effect runs once when the component mounts
+
+  const handleSaveProfile = async () => {
+    try {
+      // Make a PUT request to update the user profile data
+      const response = await axios.put('http://localhost:5000/users/email/ali@ali.com', profileData);
+      console.log('Profile saved:', response.data);
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
 
-  const handleMyOrderClick = () => {
-    console.log('My Order button clicked');
+  const handleInputChange = (field, value) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
   };
 
-  const handleEditProfileClick = () => {
-    console.log('Edit Profile button clicked');
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileData((prevData) => ({
+          ...prevData,
+          imageSrc: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleMyOrdersClick = () => {
+    // Handle "My Orders" button click logic here
+    console.log('My Orders button clicked');
   };
 
   return (
-    <StyledContainer>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <StyledPaper>
-            <StyledAvatar alt="Profile Image" src={profileData.imageSrc} />
-            <StyledButton
-              variant="contained"
-              color="primary"
-              onClick={handleEditProfileClick}
-            >
-              Edit Profile
-            </StyledButton>
-          </StyledPaper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <StyledPaper>
-            <div className="profile-data">
-              <div className="profile-name">{profileData.name}</div>
-              <div className="profile-contact">
-                <div>Email: {profileData.email}</div>
-                <div>Phone: {profileData.phone}</div>
-              </div>
-            </div>
-            <StyledButton
-              variant="contained"
-              color="success"
-              onClick={handleMyOrderClick}
-            >
-              My Requests
-            </StyledButton>
-          </StyledPaper>
-        </Grid>
+    <Grid container justifyContent="center" spacing={3}>
+      <Grid item xs={12} sm={8} md={6} lg={4}>
+        <StyledCard>
+          <StyledAvatar alt="Profile Image" src={profileData.imageSrc} />
+          <Input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            style={{ display: 'none' }}
+            id="image-upload"
+          />
+          <label htmlFor="image-upload">
+            <Button component="span" variant="outlined">
+              Upload Image
+            </Button>
+          </label>
+          <TextField
+            label="Name"
+            value={profileData.name}
+            onChange={(e) => handleInputChange('name', e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Email"
+            value={profileData.email}
+            onChange={(e) => handleInputChange('email', e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Phone"
+            value={profileData.phone}
+            onChange={(e) => handleInputChange('phone', e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Address"
+            value={profileData.address}
+            onChange={(e) => handleInputChange('address', e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Date"
+            value={profileData.date}
+            onChange={(e) => handleInputChange('date', e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <StyledButton
+            variant="contained"
+            color="primary"
+            onClick={handleSaveProfile}
+          >
+            Save Profile
+          </StyledButton>
+          <StyledButton
+            variant="contained"
+            color="secondary"
+            onClick={handleMyOrdersClick}
+          >
+            My Orders
+          </StyledButton>
+        </StyledCard>
       </Grid>
-    </StyledContainer>
+    </Grid>
   );
 };
 
-export default UserProfile;
+export default EditProfile;
