@@ -7,7 +7,11 @@ export default class Home extends Component {
     return (
       <>
       <div className='h'>
+      
       <Search/>
+      <h1 className='hmada'>
+         What's are you looking for!
+      </h1> 
       </div>
       <Footer/>
       </>
