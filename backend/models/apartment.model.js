@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const propertySchema = new Schema(
+const apartmentSchema = new Schema(
   {
     // user_id: { type: String,required: true },
-    property_id: { type: String , unique: true, required: true },
+    apartment_id: { type: String , unique: true, required: true },
     category:{type: String,required: true },
     Out_ttitle:{type: String,required: true }, // (e.g Before clicking on property card)
     In_title:{type: String,required: true }, // (e.g After clicking on property card)
@@ -28,7 +28,7 @@ const propertySchema = new Schema(
     price:{ type: Number, required: true },
     status:{type: String,required: true }, //(e.g., available, under contract, sold).
     availabilityDate:{type: String ,required: true }, // The date when the property will be available.
-    image1: { type: String, required: true }, 
+    image1: { type: String, required: true },
     image2: { type: String, required: true }, 
     image3: { type: String, required: true }, 
     image4: { type: String, required: true }, 
@@ -39,4 +39,4 @@ const propertySchema = new Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model("Property",propertySchema);
+module.exports = mongoose.model("apartment",apartmentSchema);
