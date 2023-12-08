@@ -20,56 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
   res.send("Hello World, from cs309");
 });
-app.get("/property/categories", async (req, res) => {
-  try {
-    const categories = await Categories.find({});
-    res.status(200).json(categories);
-  } catch (error) {
-    res.status(401).json({ message: error.message });
-  }
-});
-
-app.get("/property/categories/:category", async (req, res) => {
-  try {
-    const category = req.params.category;
-
-    // Query properties based on the provided category
-    const properties = await Property.find({ category: category });
-
-    if (properties.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No properties found for the specified category." });
-    }
-
-    res.status(200).json(properties);
-  } catch (error) {
-    res.status(500).json({ message: "Server error: " + error.message });
-  }
-});
-app.get("/property/categories/:category/:property_id", async (req, res) => {
-  try {
-    const category = req.params.category;
-    const propertyId = req.params.property_id;
-
-    // Query a specific property within the specified category and property_id
-    const property = await Property.findOne({
-      category: category,
-      property_id: propertyId,
-    });
-
-    if (!property) {
-      return res.status(404).json({
-        message:
-          "Property not found for the specified category and property_id.",
-      });
-    }
-
-    res.status(200).json(property);
-  } catch (error) {
-    res.status(500).json({ message: "Server error: " + error.message });
-  }
-});
 
 app.get("/users", async (req, res) => {
   try {
@@ -127,6 +77,25 @@ app.delete("/users/:id", async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(403).json({ message: error.message });
+  }
+});
+
+app.get("/login", async (req, res) => {
+  try {
+    const userParam = req.body;
+    const user = await User.findOne({ email: userParam.email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(userParam.password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
   }
 });
 
@@ -315,6 +284,56 @@ app.put("/users/:id", (req, res) => {
   }
 });
 
+app.get("/property/categories", async (req, res) => {
+  try {
+    const categories = await Categories.find({});
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+});
+
+app.get("/property/categories/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    // Query properties based on the provided category
+    const properties = await Property.find({ category: category });
+
+    if (properties.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No properties found for the specified category." });
+    }
+
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
+app.get("/property/categories/:category/:property_id", async (req, res) => {
+  try {
+    const category = req.params.category;
+    const propertyId = req.params.property_id;
+
+    // Query a specific property within the specified category and property_id
+    const property = await Property.findOne({
+      category: category,
+      property_id: propertyId,
+    });
+
+    if (!property) {
+      return res.status(404).json({
+        message:
+          "Property not found for the specified category and property_id.",
+      });
+    }
+
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
 app.delete("/property/:id", async (req, res) => {
   try {
     const { villa_id } = req.params.villa_id;
