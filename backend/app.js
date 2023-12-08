@@ -314,9 +314,11 @@ app.post("/addnewproperty", async (req,res) => {
       return res.status(400).json({ message: "This property has been published before" });
     }    
     const property = new Property({
+
       property_id: propertyparam.property_id,
       category: propertyparam.category,
       Out_ttitle: propertyparam.Out_ttitle,
+
       In_title: propertyparam.In_title,
       short_address: propertyparam.short_address,
       sale_type: propertyparam.sale_type,
@@ -457,20 +459,29 @@ app.get('/properties', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-app.get("/property/id", async (req, res) => {
+app.get("/property/:propertyId", async (req, res) => {
   try {
-    // find by id in users
-    const propertyes = await Property.find(id);
-    res.status(200).json(propertyes);
+    // Extract propertyId from the request parameters
+    const propertyId = req.params.propertyId;
+
+    // Find by propertyId in Property collection
+    const property = await Property.findOne({ property_id: propertyId });
+
+    if (!property) {
+      // If property is not found, send a 404 response
+      return res.status(404).json({ message: 'Property not found' });
+    }
+
+    res.status(200).json(property);
   } catch (error) {
-    res.status(402).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
 mongoose.set("strictQuery", false);
 mongoose
   .connect("mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/")
-
+  
   .then(() => {
     console.log("connected to MongoDB");
     //listen on specific port

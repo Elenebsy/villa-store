@@ -1,0 +1,97 @@
+/* Common styles for all screen sizes */
+.single-property-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.single-property-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.single-property-content {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+.property-description {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.property-details p {
+    color: #333;
+    margin: 8px 0;
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #1b6ca8;
+}
+
+/* Button styles */
+.request-meeting-button {
+    background-color: #1b6ca8;
+    color: #fff;
+    padding: 15px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Hide the underline */
+}
+
+.request-meeting-button:hover {
+    background-color: #155084;
+    text-decoration: none; /* Hide the underline on hover */
+}
+/* Modernize property details section */
+.property-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.property-details p {
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 600px) {
+    .single-property-content {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .property-description {
+        font-size: 14px;
+    }
+
+    .property-details p {
+        font-size: 14px;
+    }
+}
