@@ -6,10 +6,99 @@
     height: 500px;
     padding-top: 0%;
 }
-.hmada{
-    font-family: 'Dancing Script', cursive;
-    text-align: left;
-    color: white;
-    margin-left: 10%;
-    font-size: 3rem;
+/* Home.css */
+
+.HomeBody {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  padding: 20px;
 }
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.categoryTitle {
+  flex: 1;
+}
+
+.link {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.link li {
+  font-size: 18px;
+}
+
+.link a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.link a:hover {
+  background-color: #ddd;
+}
+
+.categoryProducts {
+  display: flex;
+}
+
+.slider {
+  display: flex;
+}
+
+.slider-item {
+  flex: 0 0 auto;
+  margin-right: 10px; /* Adjust the margin between slides */
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px; /* Adjust the width of each card */
+  transition: transform 0.3s ease; /* Add a smooth transition effect */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Scale up the card on hover */
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-content {
+  padding: 10px;
+}
+
+/* Your existing styles for .h and .hmada */
+.h {
+  display: block;
+  background-image: url('../Assets/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 500px;
+  padding-top: 0%;
+}
+
+.hmada {
+  font-family: 'Dancing Script', cursive;
+  text-align: left;
+  color: white;
+  margin-left: 10%;
+  font-size: 3rem;
+}
+
