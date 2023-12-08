@@ -38,7 +38,6 @@ const pages = createBrowserRouter(
     </Route>
   )
 );
-
 function App() {
   return (
     <>
