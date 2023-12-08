@@ -1,42 +1,47 @@
-// ProfilePage.js
+// UserProfile.js
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from "react";
+import "./userProfile.css";
 
-const ProfilePage = () => {
-  const [userData, setUserData] = useState(null);
+const UserProfile = () => {
+  const profileData = {
+    name: "John Doe",
+    phone: "+1234567890",
+    email: "john.doe@example.com",
+    // Add the actual image source
+    imageSrc: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  };
 
-  useEffect(() => {
-    // Replace 'http://your-api-endpoint/user' with your actual API endpoint
-    const email='http://localhost:5000/user/';
-    axios.get(`http://localhost:5000/users/email/${email}`)
-      .then(response => {
-        setUserData(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-      });
-  }, []);
-  
+  const handleMyOrderClick = () => {
+    // Handle the "My Order" button click event
+    console.log("My Order button clicked");
+  };
 
-  const handleSettingsClick = () => {
-    // Add your logic for handling the "Settings" button click
-    console.log('Settings button clicked');
+  const handleEditProfileClick = () => {
+    // Handle the "Edit Profile" button click event
+    console.log("Edit Profile button clicked");
   };
 
   return (
-    <div className="profile-page">
-      <img src={userData.image} alt="Profile" className="profile-image" />
-      <div className="user-data">
-        <h2>{userData.fullName}</h2>
-        <p>{userData.email}</p>
-        <p>{userData.phone}</p>
+    <div className="profile-container">
+      <img
+        src={profileData.imageSrc}
+        alt="Profile Image"
+        className="profile-image"
+      />
+      <div className="profile-name">{profileData.name}</div>
+      <div className="profile-contact">
+        <div>Phone: {profileData.phone}</div>
+        <div>Email: {profileData.email}</div>
       </div>
-      <button onClick={handleSettingsClick} className="settings-button">
-        Settings
+      <button onClick={handleMyOrderClick} className="button">
+        My Order
+      </button>
+      <button onClick={handleEditProfileClick} className="button">
+        Edit Profile
       </button>
     </div>
   );
 };
 
-export default ProfilePage;
+export default UserProfile;
