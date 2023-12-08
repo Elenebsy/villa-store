@@ -1,0 +1,74 @@
+.categoryTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px;
+    width: 60%; /* Set a specific width for the category title */
+    justify-content: flex-end; /* Move to the right */
+  }
+  .scontainer {
+    display: block;
+    height: 65vh;
+    background-image: url('https://i.imgur.com/dVtqVvH.png');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+   
+    position: relative; /* Add position relative to position the paragraph */
+  }
+  
+  .intro-text {
+  padding: 10px;
+    color: #fff; /* Set the text color */
+    text-align: left;
+    font-size: 1.5rem;
+  }
+
+  .link {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .link li {
+    margin: 0 20px; /* Adjust the margin between list items */
+  }
+  
+  .link a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px; /* Increase padding for larger font */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem; /* Increase font size */
+  }
+  
+  .link a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Additional styles for specific categories */
+  /* .1c {
+    /* Add specific styles for the category link with class "1c" if needed */
+  
+  
+  /* Responsive styles */
+  @media screen and (max-width: 600px) {
+    .categoryTitle {
+      flex-direction: column;
+      align-items: center;
+      width: 90%; /* Adjust the width for smaller screens */
+    }
+  
+    .link {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .link li {
+      margin: 10px 0; /* Adjust the margin for smaller screens */
+    }
+  }
+  
