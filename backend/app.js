@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user.model");
 const Categories = require("./models/categories.model");
 const Property = require("./models/property.model");
+const Apartment = require("./models/apartment.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");
 const bcrypt = require("bcrypt");
@@ -314,11 +315,9 @@ app.post("/addnewproperty", async (req,res) => {
       return res.status(400).json({ message: "This property has been published before" });
     }    
     const property = new Property({
-
       property_id: propertyparam.property_id,
       category: propertyparam.category,
       Out_ttitle: propertyparam.Out_ttitle,
-
       In_title: propertyparam.In_title,
       short_address: propertyparam.short_address,
       sale_type: propertyparam.sale_type,
@@ -340,12 +339,67 @@ app.post("/addnewproperty", async (req,res) => {
       price: propertyparam.price,
       status: propertyparam.status,
       availabilityDate: propertyparam.availabilityDate,
-      image1: propertyparam.image1,
+      image1:propertyparam.image1,
+      image2:propertyparam.image2,
+      image3:propertyparam.image3,
+      image4:propertyparam.image4,
+      image5:propertyparam.image5,
+      image6:propertyparam.image6,
     });
     // Save the property to the database
     await property .save();
 
     res.status(201).json({ message: "Property added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+
+});
+
+app.post("/addnewapartment", async (req,res) => {
+  try {
+    const apartmentaram = req.body;
+
+    // Check if the property has been published before
+    if (await Apartment.findOne({  apartment_id: apartmentaram.apartment_id })) {
+      return res.status(400).json({ message: "This Apartment has been published before" });
+    }    
+    const apartment = new Apartment({
+      apartment_id: apartmentaram.apartment_id,
+      category: apartmentaram.category,
+      Out_ttitle: apartmentaram.Out_ttitle,
+      In_title: apartmentaram.In_title,
+      short_address: apartmentaram.short_address,
+      sale_type: apartmentaram.sale_type,
+      size: apartmentaram.size,
+      country: apartmentaram.country,
+      street: apartmentaram.street,
+      city: apartmentaram.city,
+      state: apartmentaram.state,
+      District:  apartmentaram.District,
+      num_house: apartmentaram.num_house,
+      description: apartmentaram.description,
+      type:apartmentaram.type,
+      num_room: apartmentaram.num_room,
+      num_Bedrooms:apartmentaram.num_Bedrooms,
+      num_Bathrooms: apartmentaram.num_Bathrooms,
+      num_Floors: apartmentaram.num_Floors,
+      num_individuals: apartmentaram.num_individuals,
+      Amenities: apartmentaram.Amenities,
+      price: apartmentaram.price,
+      status: apartmentaram.status,
+      availabilityDate: apartmentaram.availabilityDate,
+      image1:apartmentaram.image1,
+      image2:apartmentaram.image2,
+      image3:apartmentaram.image3,
+      image4:apartmentaram.image4,
+      image5:apartmentaram.image5,
+      image6:apartmentaram.image6,
+    });
+    // Save the property to the database
+    await apartment .save();
+
+    res.status(201).json({ message: "Apartment added successfully" });
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
@@ -455,6 +509,15 @@ app.get('/properties', async (req, res) => {
   try {
     const properties = await Property.find();
     res.json(properties);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/apartments', async (req, res) => {
+  try {
+    const apartments = await Apartment.find();
+    res.json(apartments);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

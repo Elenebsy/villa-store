@@ -1,0 +1,13 @@
+/* Add this CSS to your Home.css or create a new CSS file */
+
+.categoryProducts {
+  display: flex;
+  overflow: hidden;
+  max-width: 2500px; /* Set the maximum width of the slider */
+  margin: 0 auto; /* Center the slider on the page */
+}
+
+.card,
+.slider-item {
+  margin-top: 10px; /* Adjust the value as needed */
+}
