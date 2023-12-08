@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import './SignUp.css'; // Import your CSS file
+import './SignUp.css';
 
 const RegisterForm = () => {
   const [userData, setUserData] = useState({
@@ -23,7 +23,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/addusers', userData);
+      const response = await axios.post('http:://localhost:3000/adduser', userData);
       console.log('User registration successful:', response.data);
 
       setUserData({

@@ -1,0 +1,38 @@
+
+
+.search-form {
+    width: 100%;
+    max-width: 400px; 
+    margin: 0 auto; 
+  }
+  
+  .Search-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form-group {
+    display: flex;
+  }
+  
+  .form-control {
+    flex: 1;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .Search-btn {
+    background-color: black;
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .Search-form {
+      max-width: 100%; 
+    }
+  }
+  

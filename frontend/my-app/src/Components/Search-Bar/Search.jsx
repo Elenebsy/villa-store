@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import axios from 'axios';
-
+import './Search.css'
 const Search = ({ onSearch }) => {
   const [key, setKey] = useState('');
 

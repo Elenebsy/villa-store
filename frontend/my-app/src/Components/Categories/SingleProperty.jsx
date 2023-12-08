@@ -10,7 +10,7 @@ const SingleProperty = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/property/1`);
+        const response = await axios.get(`/property/5`);
         const data = response.data;
         setProperty(data);
         console.log('Fetched Single Property Data:', data);
@@ -30,7 +30,7 @@ const SingleProperty = () => {
       ) : (
         <>
           <img src={property.image1} alt={`Property`} className="single-property-image" />
-          <Link to={`/property/1/meeting-request`} className="request-meeting-button">
+          <Link to={`/property/2/meeting-request`} className="request-meeting-button">
             Request a Meeting
           </Link>
 

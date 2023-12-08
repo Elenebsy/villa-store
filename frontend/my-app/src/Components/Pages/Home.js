@@ -56,43 +56,43 @@ export default class Home extends Component {
             </ul>
           </div>
         </div>
-        <div className="h">
-        </div>
-        <div className="categoryProducts">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              <div className="slider">
-                {houses.map((property) => (
-                  <div key={property.property_id} className="slider-item">
-                    <div className="card">
-                      <img src={property.image1} alt={property.Out_ttitle} />
-                      <div className="card-content">
-                        <h3>{property.Out_ttitle}</h3>
-                        <p>Price: ${property.price}</p>
-                        {/* Add more details as needed */}
+        <div className='h'>
+          <div className="categoryProducts">
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <div className="photo-grid">
+                  {houses.map((property) => (
+                    <div key={property.property_id} className="photo-item">
+                      <div className="card">
+                        <img src={property.image1} alt={property.Out_ttitle} />
+                        <div className="card-content">
+                          <h3>{property.Out_ttitle}</h3>
+                          <p>Price: ${property.price}</p>
+                          {/* Add more details as needed */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div className="slider">
-                {apartments.map((property) => (
-                  <div key={property.property_id} className="slider-item">
-                    <div className="card">
-                      <img src={property.image1} alt={property.Out_ttitle} />
-                      <div className="card-content">
-                        <h3>{property.Out_ttitle}</h3>
-                        <p>Price: ${property.price}</p>
-                        {/* Add more details as needed */}
+                  ))}
+                </div>
+                <div className="photo-grid">
+                  {apartments.map((property) => (
+                    <div key={property.property_id} className="photo-item">
+                      <div className="card">
+                        <img src={property.image1} alt={property.Out_ttitle} />
+                        <div className="card-content">
+                          <h3>{property.Out_ttitle}</h3>
+                          <p>Price: ${property.price}</p>
+                          {/* Add more details as needed */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <Footer />
       </div>

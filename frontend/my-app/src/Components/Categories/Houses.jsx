@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Houses.css';
 import { Link } from 'react-router-dom';
-import Search from '../Search-Bar/Search'; 
-
+import Search from '../Search-Bar/Search';
 const Houses = () => {
   const [propertyData, setPropertyData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchResults, setSearchResults] = useState([]); // New state for search results
-
+  const [searchResults, setSearchResults] = useState([]); 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,7 +30,7 @@ const Houses = () => {
 
   return (
     <div>
-      <Search onSearch={handleSearch} />
+      <Search className='ha' onSearch={handleSearch} />
       <div className="grid-container">
         {loading ? (
           <p>Loading...</p>
@@ -55,5 +53,6 @@ const Houses = () => {
     </div>
   );
 };
+
 
 export default Houses;
