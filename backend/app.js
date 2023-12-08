@@ -1,11 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user.model");
-<<<<<<< HEAD
 const Purchase = require("./models/purchase.model");
-=======
 const Categories = require("./models/categories.model");
->>>>>>> 43fa4cb1d2e3691f5ab5235b333f02a8237b8f44
 const Property = require("./models/property.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");

@@ -5,12 +5,7 @@ const propertySchema = new Schema(
   {
     // user_id: { type: String,required: true },
     property_id: { type: Number, unique: true, required: true },
-<<<<<<< HEAD
-    user_id: { type: String,  required: true },
-    catagory:{type: String,required: true },
-=======
     category:{type: String,required: true },
->>>>>>> 43fa4cb1d2e3691f5ab5235b333f02a8237b8f44
     Out_ttitle:{type: String,required: true }, // (e.g Before clicking on property card)
     In_title:{type: String,required: true }, // (e.g After clicking on property card)
     description: {type: String, required: true}, 

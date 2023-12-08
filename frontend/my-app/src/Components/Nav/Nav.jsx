@@ -44,6 +44,7 @@ function ResponsiveAppBar(props) {
                   Sign Up
                 </NavLink>
               </li>
+
               <li>
               <NavLink to="/cart"className="lk">
                 <ShoppingCart size = {32}/>
