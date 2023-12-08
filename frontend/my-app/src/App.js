@@ -1,7 +1,7 @@
 
 import  './App.css';
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter, RouterProvider, createRoutesFromElements } from "react-router-dom"
-// import { HousesContextProvider } from './context/Houses-context';
+// import { HousesContextProvider } from '../../../context/Houses-context';
 import About from './Components/Pages/About.js';
 import Contact from './Components/Pages/Contact.js';
 import Login from './Components/Pages/Login.js';
@@ -22,10 +22,10 @@ const pages = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
-      <HousesContextProvider>
+      {/* <HousesContextProvider> */}
       <Route path="/cart" element={<Cart />} />
       <Route path="/Houses" element={<Houses />} />
-      </HousesContextProvider>
+      {/* </HousesContextProvider> */}
       <Route path="/Apartments" element={<Apartments />} />
     </Route>
   )
