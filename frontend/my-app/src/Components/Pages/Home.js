@@ -8,9 +8,6 @@ export default class Home extends Component {
   render() {
     return (
       <div className="HomeBody">
-            <h1 className='hmada'>
-         What's are you looking for!
-            </h1> 
         <div className="category">
           <div className="categoryTitle">
             <ul className="link">
@@ -24,9 +21,6 @@ export default class Home extends Component {
           </div>
           <div className="categoryProducts">
           </div>
-        </div>
-        <div className='h'>
-          <Search />
         </div>
         <Footer />
       </div>

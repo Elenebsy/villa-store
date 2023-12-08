@@ -3,3 +3,57 @@
     width: 6rem;
     cursor: pointer;
 }
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 5%;
+    margin-right: auto;
+  }
+  
+/* Search.css */
+
+.search-form {
+    width: 150%;
+    max-width: 1000px; /* Adjust the max-width as needed */
+    margin: 0 auto;
+  }
+  
+  .Search-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .form-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .form-control {
+    width: calc(100% - 0px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 36px; /* Make it rounded */
+    outline: none;
+  }
+  
+  .Search-btn {
+    background-color: black;
+    border: none;
+    position: relative;
+    left: 10px;
+    bottom: 4px;
+    border-radius: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .search-result {
+    /* Add styles for the search results as needed */
+  }
+  
+  /* Add other styles as needed */
+  

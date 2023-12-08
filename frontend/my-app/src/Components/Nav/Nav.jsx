@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom';
 import logo from '../Assets/cas.png';
 import './nav.css';
 import { NavLink } from 'react-router-dom';
-import Home from '../Pages/Home';
+import Search from '../Search-Bar/Search';
 
 
 const drawerWidth =240;
@@ -108,6 +108,8 @@ export default function PersistentDrawerLeft() {
             <img src={logo} className='logo' />
         </Link>
           </Typography>
+         <div className='search-container'> <Search/>
+         </div>
         </Toolbar>
       </AppBar>
       <Drawer
