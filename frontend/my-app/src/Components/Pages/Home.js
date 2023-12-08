@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import { createTheme } from '@mui/material/styles';
 import "../Categories/CategoryTitleDesign.css";
+import Search from '../Search-Bar/Search'
+import Footer from '../Footer/Footer'
+import './Home.css'
 
 export default class Home extends Component {
   render() {
     return (
       <div className="HomeBody">
-        <div className='headings'>
-          <div className="scontainer">
-            <h1 className="intro-text">Find your dream home today!</h1>
-          </div>
-        </div>
         <div className="category">
           <div className="categoryTitle">
             <ul className="link">
@@ -24,10 +22,14 @@ export default class Home extends Component {
             </ul>
           </div>
           <div className="categoryProducts">
-
           </div>
         </div>
+        <div className='h'>
+          <Search />
+        </div>
+        <Footer />
       </div>
     );
+
   }
 }
