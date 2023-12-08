@@ -5,69 +5,46 @@ const Categories = require("./models/categories.model");
 const Property = require("./models/property.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");
+const Review = require("./models/review.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
-const mongouri = "fd";
+const mongouri =
+  "mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/";
 
 // app service
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+///////////////////////////////////////
+///////////////////////////////////////
 
-app.get("/", (req, res) => {
-  res.send("Hello World, from cs309");
-});
-app.get("/property/categories", async (req, res) => {
+//post for review
+app.post("/addreview", async (req, res) => {
+  const review = new Review(req.body);
   try {
-    const categories = await Categories.find({});
-    res.status(200).json(categories);
+    await review.save();
+    res.status(201).send(review);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+//get for review by property id
+app.get("/reviews/:property_id", async (req, res) => {
+  try {
+    const reviews = await Review.find({ property_id: req.params.property_id });
+    res.status(200).json(reviews);
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
 });
 
-app.get("/property/categories/:category", async (req, res) => {
-  try {
-    const category = req.params.category;
+////////////////////////////////////////
+////////////////////////////////////////
 
-    // Query properties based on the provided category
-    const properties = await Property.find({ category: category });
-
-    if (properties.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "No properties found for the specified category." });
-    }
-
-    res.status(200).json(properties);
-  } catch (error) {
-    res.status(500).json({ message: "Server error: " + error.message });
-  }
-});
-app.get("/property/categories/:category/:property_id", async (req, res) => {
-  try {
-    const category = req.params.category;
-    const propertyId = req.params.property_id;
-
-    // Query a specific property within the specified category and property_id
-    const property = await Property.findOne({
-      category: category,
-      property_id: propertyId,
-    });
-
-    if (!property) {
-      return res.status(404).json({
-        message:
-          "Property not found for the specified category and property_id.",
-      });
-    }
-
-    res.status(200).json(property);
-  } catch (error) {
-    res.status(500).json({ message: "Server error: " + error.message });
-  }
+app.get("/", (req, res) => {
+  res.send("Hello World, from cs309");
 });
 
 app.get("/users", async (req, res) => {
@@ -109,24 +86,7 @@ app.get("/users/email/:email", async (req, res) => {
     res.status(402).json({ message: "Internal Server Error" });
   }
 });
-// get for log in and unhashing password
-// app.get("/users/login", async (req, res) => {
-//   try {
-//     const user_param = req.body;
-//     const user = await User.findOne({ email: userParam.email });
-//     if (await User.findOne({ email: userParam.email })) {
-//       return res.status(400).json({ message: "Email is already in use" });
-//     }
-//     const hashedPassword = user.password;
-//     const isMatch = await bcrypt.compare(userParam.password, hashedPassword);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: "Invalid credentials" });
-//     }
-//     res.status(200).json({ message: "User logged in successfully" });
-//   } catch (error) {
-//     res.status(402).json({ message: error.message });
-//   }
-// });
+
 app.delete("/users/:id", async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -139,11 +99,29 @@ app.delete("/users/:id", async (req, res) => {
         .status(404)
         .json({ message: `Cannot find any user with ID ${id}` });
     }
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     res.status(403).json({ message: error.message });
+  }
+});
+
+app.get("/login", async (req, res) => {
+  try {
+    const userParam = req.body;
+    const user = await User.findOne({ email: userParam.email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(userParam.password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
   }
 });
 
@@ -332,6 +310,56 @@ app.put("/users/:id", (req, res) => {
   }
 });
 
+app.get("/property/categories", async (req, res) => {
+  try {
+    const categories = await Categories.find({});
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+});
+
+app.get("/property/categories/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    // Query properties based on the provided category
+    const properties = await Property.find({ category: category });
+
+    if (properties.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No properties found for the specified category." });
+    }
+
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
+app.get("/property/categories/:category/:property_id", async (req, res) => {
+  try {
+    const category = req.params.category;
+    const propertyId = req.params.property_id;
+
+    // Query a specific property within the specified category and property_id
+    const property = await Property.findOne({
+      category: category,
+      property_id: propertyId,
+    });
+
+    if (!property) {
+      return res.status(404).json({
+        message:
+          "Property not found for the specified category and property_id.",
+      });
+    }
+
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ message: "Server error: " + error.message });
+  }
+});
 app.delete("/property/:id", async (req, res) => {
   try {
     const { villa_id } = req.params.villa_id;
