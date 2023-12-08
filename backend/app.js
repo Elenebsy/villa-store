@@ -401,15 +401,30 @@ app.get('/properties', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-app.get("/property/id", async (req, res) => {
+app.get("/property/:propertyId", async (req, res) => {
   try {
-    // find by id in users
-    const propertyes = await Property.find(id);
-    res.status(200).json(propertyes);
+    // Extract propertyId from the request parameters
+    const propertyId = req.params.propertyId;
+
+    // Validate if propertyId is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+      return res.status(400).json({ message: 'Invalid property ID' });
+    }
+
+    // Find by propertyId in Property collection
+    const property = await Property.findById(propertyId);
+
+    if (!property) {
+      // If property is not found, send a 404 response
+      return res.status(404).json({ message: 'Property not found' });
+    }
+
+    res.status(200).json(property);
   } catch (error) {
-    res.status(402).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
+
 
 mongoose.set("strictQuery", false);
 mongoose
