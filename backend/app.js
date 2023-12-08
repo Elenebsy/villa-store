@@ -464,13 +464,8 @@ app.get("/property/:propertyId", async (req, res) => {
     // Extract propertyId from the request parameters
     const propertyId = req.params.propertyId;
 
-    // Validate if propertyId is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(propertyId)) {
-      return res.status(400).json({ message: 'Invalid property ID' });
-    }
-
     // Find by propertyId in Property collection
-    const property = await Property.findById(propertyId);
+    const property = await Property.findOne({ property_id: propertyId });
 
     if (!property) {
       // If property is not found, send a 404 response
@@ -483,11 +478,10 @@ app.get("/property/:propertyId", async (req, res) => {
   }
 });
 
-
 mongoose.set("strictQuery", false);
 mongoose
   .connect("mongodb+srv://bgbos7077:3LmqXQlqC1qHVDb6@propertyapi.afaqt2y.mongodb.net/")
-
+  
   .then(() => {
     console.log("connected to MongoDB");
     //listen on specific port
