@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { useState, useEffect } from 'react';
-import '../Pages/Search.css';
+import './Search.css';
 import axios from "axios"
 export default function Search() {
   const [searchResult, setSearchResult] = useState([])
