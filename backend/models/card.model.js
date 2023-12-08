@@ -9,10 +9,6 @@ const CardSchema = new Schema(
     cvv: { type: String, required: true },
     expirationDate: { type: String, required: true },
 
-  },
-  {
-    timestamps: true,
-  }
-);
+  });
 
 module.exports = mongoose.model("Card", CardSchema);
