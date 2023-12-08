@@ -1,34 +1,16 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// Define the Review schema
-const reviewSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // Reference to the User model
-    required: true,
+const reviewSchema = new Schema(
+  {
+    review: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    rating: { type: Number, required: true, min: 1, max: 5 },
+    property_id: { type: String, unique: true, required: true },
   },
-  property: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Property", // Reference to the Product model
-    required: true,
-  },
-  rating: {
-    type: Number,
-    required: true,
-    min: 1,
-    max: 5,
-  },
-  comment: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
-// Create the Review model
-const Review = mongoose.model("Review", reviewSchema);
-
-module.exports = Review;
+module.exports = mongoose.model("Review", reviewSchema);

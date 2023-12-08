@@ -5,6 +5,7 @@ const Categories = require("./models/categories.model");
 const Property = require("./models/property.model");
 const Meeting = require("./models/meetingform.model");
 const Card = require("./models/card.model");
+const Review = require("./models/review.model");
 const bcrypt = require("bcrypt");
 
 // const Seller = require("./models/seller.model");
@@ -16,6 +17,31 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+///////////////////////////////////////
+///////////////////////////////////////
+
+//post for review
+app.post("/addreview", async (req, res) => {
+  const review = new Review(req.body);
+  try {
+    await review.save();
+    res.status(201).send(review);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+//get for review by property id
+app.get("/reviews/:property_id", async (req, res) => {
+  try {
+    const reviews = await Review.find({ property_id: req.params.property_id });
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(401).json({ message: error.message });
+  }
+});
+
+////////////////////////////////////////
+////////////////////////////////////////
 
 app.get("/", (req, res) => {
   res.send("Hello World, from cs309");
