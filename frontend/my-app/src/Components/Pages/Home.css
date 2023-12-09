@@ -64,9 +64,11 @@
 
 .photo-grid {
   display: flex;
-  flex-wrap: wrap; 
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 53px;
+  margin-left: 6rem;
 }
+
 
 
 .card {
@@ -87,7 +89,7 @@
 }
 
 .card-content {
-  padding: 16px;
+  padding: 26px;
   text-align: center;
 }
 
@@ -102,4 +104,5 @@
   margin-left: 10%;
   font-size: 3rem;
 }
+
 

@@ -35,8 +35,8 @@ export default class Home extends Component {
     const { propertyData, loading } = this.state;
 
     // Filter properties based on type
-    const houses = propertyData.filter((property) => property.type === 'house').slice(0, 9);
-    const apartments = propertyData.filter((property) => property.type === 'apartment').slice(0, 9);
+    const houses = propertyData.filter((property) => property.type === 'house').slice(0, 20);
+    const apartments = propertyData.filter((property) => property.type === 'apartment').slice(0, 20);
 
     return (
       <div className="HomeBody">

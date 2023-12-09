@@ -30,7 +30,13 @@ const SingleProperty = () => {
         <p>Loading..</p>
       ) : (
         <>
-          <img src={property.image1} alt={`Property`} className="single-property-image" />
+        <dev className="image-contaner">
+          <img src={property.image1}  alt={`Property`} className="single-property-imagehome" />
+          <div className='sidimage'>
+          <img src={property.image2} alt={`Property`} className='img1'/>
+          <img src={property.image3} alt={`Property`}className='img2'/>
+          </div>
+          </dev>
           <Link to={`/property/2/meeting-request`} className="request-meeting-button">
             Request a Meeting
           </Link>

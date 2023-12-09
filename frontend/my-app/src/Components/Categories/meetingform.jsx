@@ -76,7 +76,7 @@ const MeetingRequestForm = () => {
                     />
                 </div>
 
-                <Link to="/cart" className="request-meeting-button">
+                <Link to="/Cart" className="request-meeting-button">
                     Request a Meeting
                 </Link>
             </form>

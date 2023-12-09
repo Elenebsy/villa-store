@@ -534,6 +534,25 @@ app.get("/property/:propertyId", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+app.get("/apartments/:apartmentsid", async (req, res) => {
+  try {
+    // Extract propertyId from the request parameters
+    const propertyId = req.params.propertyId;
+
+    // Find by propertyId in Property collection
+    const property = await Property.findOne({ property_id: propertyId });
+
+    if (!property) {
+      // If property is not found, send a 404 response
+      return res.status(404).json({ message: "Property not found" });
+    }
+
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 // get all purchase

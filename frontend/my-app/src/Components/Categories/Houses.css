@@ -40,7 +40,17 @@ h2 {
 p {
   margin-bottom: 8px;
   color: black; 
-  text-decoration:none;
+  text-decoration: none;
+}
+
+/* Make links black */
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 /* Responsive Styling */
