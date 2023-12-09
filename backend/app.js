@@ -625,6 +625,8 @@ mongoose
   });
   // this is my comment
   // this is my second coment
+  // added the data of the apartments to the database
+  // handled the data of the porperty to the database
 
 
 

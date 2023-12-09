@@ -41,6 +41,7 @@ const Apartments = () => {
                 <p>Price: ${apartment.price}</p>
                 {/* Add more details as needed */}
               </div>
+              {/* <botton> add to Cart </botton> */}
 
             </div>
           </Link>
