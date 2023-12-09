@@ -1,27 +1,37 @@
 // ProductCardPage.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ProductCardPage = ({ match }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const { id } = useParams();
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await axios.get(`/properties/${match.params.productId}`);
+        const response = await axios.get(
+          `/properties/${match.params.productId}`
+        );
         const data = response.data;
         setProduct(data);
         setLoading(false);
-        console.log('Fetched Product Details:', data);
+        console.log("Fetched Product Details:", data);
       } catch (error) {
-        console.error('Error fetching product details:', error);
+        console.error("Error fetching product details:", error);
         setLoading(false);
       }
     };
 
     fetchProductDetails();
   }, [match.params.productId]);
+
+  useEffect(() => {
+    console.log(
+      id,
+      "fdsalkflksajflkjfsalkjflksafjlksjkajflkjlkfjlksdjalkfjlksdjfjfdjsd"
+    );
+  }, []);
 
   return (
     <div>

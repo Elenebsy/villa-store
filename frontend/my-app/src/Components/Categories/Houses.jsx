@@ -12,6 +12,7 @@ const Houses = () => {
       try {
         const response = await axios.get('/properties');
         const data = response.data;
+        console.log(data);
         setPropertyData(data);
         setLoading(false);
         console.log('Fetched Property Data:', data);

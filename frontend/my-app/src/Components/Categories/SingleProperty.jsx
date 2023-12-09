@@ -5,12 +5,13 @@ import './single.css';
 
 const SingleProperty = () => {
   const [property, setProperty] = useState({});
-  const { id } = useParams();
+  const { propertyId } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/property/5`);
+        console.log(propertyId)
+        const response = await axios.get(`/property/${propertyId}`);
         const data = response.data;
         setProperty(data);
         console.log('Fetched Single Property Data:', data);
@@ -21,7 +22,7 @@ const SingleProperty = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, []);
 
   return (
     <div className="single-property-container">

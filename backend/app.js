@@ -57,7 +57,7 @@ app.get("/users", async (req, res) => {
 
 app.get("/user/:id", async (req, res) => {
   try {
-  // find by id in users
+    // find by id in users
     const user = await User.findOne(user_id);
     res.status(200).json(user);
   } catch (error) {
@@ -146,58 +146,58 @@ app.post("/adduser", async (req, res) => {
       password: hashedPassword,
       image: userParam.image,
     });
-    await meeting.save();
+    await user.save();
 
-    res.status(201).json({ message: "Meeting scheduled successfully" });
+    res.status(201).json({ message: "user added successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-app.post("/addusers", async (req, res) => {
-  try {
-    const userParam = req.body;
-    let user_email_exist = [];
-    // console.log(userParam)
-    for (let i = 0; i < userParam.length; i++) {
-      console.log(userParam[i]);
-      // // Hash the user's password before saving it
-      // Check if the email is already in use
-      if (!(await User.findOne({ email: userParam[i].email }))) {
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(
-          userParam[i].password,
-          saltRounds
-        );
-        // Create a new User instance with the hashed password and 'fullName'
-        const user = new User({
-          user_id: userParam[i].user_id,
-          fullName: userParam[i].fullName, // Make sure 'fullName' is provided
-          phone: userParam[i].phone,
-          email: userParam[i].email,
-          password: hashedPassword,
-          image: userParam[i].image,
-        });
+// app.post("/addusers", async (req, res) => {
+//   try {
+//     const userParam = req.body;
+//     let user_email_exist = [];
+//     // console.log(userParam)
+//     for (let i = 0; i < userParam.length; i++) {
+//       console.log(userParam[i]);
+//       // // Hash the user's password before saving it
+//       // Check if the email is already in use
+//       if (!(await User.findOne({ email: userParam[i].email }))) {
+//         const saltRounds = 10;
+//         const hashedPassword = await bcrypt.hash(
+//           userParam[i].password,
+//           saltRounds
+//         );
+//         // Create a new User instance with the hashed password and 'fullName'
+//         const user = new User({
+//           user_id: userParam[i].user_id,
+//           fullName: userParam[i].fullName, // Make sure 'fullName' is provided
+//           phone: userParam[i].phone,
+//           email: userParam[i].email,
+//           password: hashedPassword,
+//           image: userParam[i].image,
+//         });
 
-        // Save the user to the database
-        await user.save();
-      } else {
-        user_email_exist.push(userParam[i]);
-      }
-    }
-    // here print the users are exist in DB
-    if (user_email_exist) {
-      res
-        .status(201)
-        .json({ users: user_email_exist, massege: "User is exist" });
-    }
+//         // Save the user to the database
+//         await user.save();
+//       } else {
+//         user_email_exist.push(userParam[i]);
+//       }
+//     }
+//     // here print the users are exist in DB
+//     if (user_email_exist) {
+//       res
+//         .status(201)
+//         .json({ users: user_email_exist, massege: "User is exist" });
+//     }
 
-    res.status(201).json({ message: "User added successfully" });
-  } catch (err) {
-    res.status(404).json({ message: "Server error: " + err.message });
-  }
-});
+//     res.status(201).json({ message: "User added successfully" });
+//   } catch (err) {
+//     res.status(404).json({ message: "Server error: " + err.message });
+//   }
+// });
 
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -231,13 +231,13 @@ app.post("/addnewcard", async (req, res) => {
 
     const card = new Card({
       userId: cardyparam.userId,
-      cardName: cardyparam. cardName,
-      cardNumber:cardyparam. cardNumber,
+      cardName: cardyparam.cardName,
+      cardNumber: cardyparam.cardNumber,
       cvv: cardyparam.cvv,
       expirationDate: cardyparam.expirationDate,
     });
     // Save the property to the database
-    await card .save();
+    await card.save();
 
     res.status(201).json({ message: "Card added successfully" });
   } catch (err) {
@@ -248,7 +248,7 @@ app.post("/addnewcard", async (req, res) => {
 ////////////////////////////////
 //////////////////////////////
 
-app.post("/addnewproperty", async (req,res) => {
+app.post("/addnewproperty", async (req, res) => {
   try {
     const propertyparam = req.body;
 
@@ -270,10 +270,10 @@ app.post("/addnewproperty", async (req,res) => {
       street: propertyparam.street,
       city: propertyparam.city,
       state: propertyparam.state,
-      District:  propertyparam.District,
+      District: propertyparam.District,
       num_house: propertyparam.num_house,
       description: propertyparam.description,
-      type:propertyparam.type,
+      type: propertyparam.type,
       num_room: propertyparam.num_room,
       num_Bedrooms: propertyparam.num_Bedrooms,
       num_Bathrooms: propertyparam.num_Bathrooms,
@@ -283,15 +283,15 @@ app.post("/addnewproperty", async (req,res) => {
       price: propertyparam.price,
       status: propertyparam.status,
       availabilityDate: propertyparam.availabilityDate,
-      image1:propertyparam.image1,
-      image2:propertyparam.image2,
-      image3:propertyparam.image3,
-      image4:propertyparam.image4,
-      image5:propertyparam.image5,
-      image6:propertyparam.image6,
+      image1: propertyparam.image1,
+      image2: propertyparam.image2,
+      image3: propertyparam.image3,
+      image4: propertyparam.image4,
+      image5: propertyparam.image5,
+      image6: propertyparam.image6,
     });
     // Save the property to the database
-    await property .save();
+    await property.save();
 
     res.status(201).json({ message: "Property added successfully" });
   } catch (err) {
@@ -299,14 +299,16 @@ app.post("/addnewproperty", async (req,res) => {
   }
 });
 
-app.post("/addnewapartment", async (req,res) => {
+app.post("/addnewapartment", async (req, res) => {
   try {
     const apartmentaram = req.body;
 
     // Check if the property has been published before
-    if (await Apartment.findOne({  apartment_id: apartmentaram.apartment_id })) {
-      return res.status(400).json({ message: "This Apartment has been published before" });
-    }    
+    if (await Apartment.findOne({ apartment_id: apartmentaram.apartment_id })) {
+      return res
+        .status(400)
+        .json({ message: "This Apartment has been published before" });
+    }
     const apartment = new Apartment({
       apartment_id: apartmentaram.apartment_id,
       category: apartmentaram.category,
@@ -319,12 +321,12 @@ app.post("/addnewapartment", async (req,res) => {
       street: apartmentaram.street,
       city: apartmentaram.city,
       state: apartmentaram.state,
-      District:  apartmentaram.District,
+      District: apartmentaram.District,
       num_house: apartmentaram.num_house,
       description: apartmentaram.description,
-      type:apartmentaram.type,
+      type: apartmentaram.type,
       num_room: apartmentaram.num_room,
-      num_Bedrooms:apartmentaram.num_Bedrooms,
+      num_Bedrooms: apartmentaram.num_Bedrooms,
       num_Bathrooms: apartmentaram.num_Bathrooms,
       num_Floors: apartmentaram.num_Floors,
       num_individuals: apartmentaram.num_individuals,
@@ -332,21 +334,20 @@ app.post("/addnewapartment", async (req,res) => {
       price: apartmentaram.price,
       status: apartmentaram.status,
       availabilityDate: apartmentaram.availabilityDate,
-      image1:apartmentaram.image1,
-      image2:apartmentaram.image2,
-      image3:apartmentaram.image3,
-      image4:apartmentaram.image4,
-      image5:apartmentaram.image5,
-      image6:apartmentaram.image6,
+      image1: apartmentaram.image1,
+      image2: apartmentaram.image2,
+      image3: apartmentaram.image3,
+      image4: apartmentaram.image4,
+      image5: apartmentaram.image5,
+      image6: apartmentaram.image6,
     });
     // Save the property to the database
-    await apartment .save();
+    await apartment.save();
 
     res.status(201).json({ message: "Apartment added successfully" });
   } catch (err) {
     res.status(404).json({ message: "Server error: " + err.message });
   }
-
 });
 
 // Assignment => add new route here to edit user info ???
@@ -507,12 +508,12 @@ app.get("/properties", async (req, res) => {
   }
 });
 
-app.get('/apartments', async (req, res) => {
+app.get("/apartments", async (req, res) => {
   try {
     const apartments = await Apartment.find();
     res.json(apartments);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 app.get("/property/:propertyId", async (req, res) => {
@@ -525,7 +526,7 @@ app.get("/property/:propertyId", async (req, res) => {
 
     if (!property) {
       // If property is not found, send a 404 response
-      return res.status(404).json({ message: 'Property not found' });
+      return res.status(404).json({ message: "Property not found" });
     }
 
     res.status(200).json(property);
