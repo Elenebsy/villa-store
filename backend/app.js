@@ -140,65 +140,64 @@ app.post("/adduser", async (req, res) => {
     const hashedPassword = await bcrypt.hash(userParam.password, saltRounds);
     // Create a new User instance with the hashed password and 'fullName'
     const user = new User({
-      user_id: userParam.user_id,
       fullName: userParam.fullName, // Make sure 'fullName' is provided
       phone: userParam.phone,
       email: userParam.email,
       password: hashedPassword,
-      image: userParam.image,
+      // image: userParam.image,
     });
     await user.save();
 
-    res.status(201).json({ message: "user added successfully" });
+    res.status(201).json({ message: "User add successfully" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal Server Error" });
+    // console.error(err);
+    res.status(401).json({ message: "Internal Server Error" + err });
   }
 });
 
-// app.post("/addusers", async (req, res) => {
-//   try {
-//     const userParam = req.body;
-//     let user_email_exist = [];
-//     // console.log(userParam)
-//     for (let i = 0; i < userParam.length; i++) {
-//       console.log(userParam[i]);
-//       // // Hash the user's password before saving it
-//       // Check if the email is already in use
-//       if (!(await User.findOne({ email: userParam[i].email }))) {
-//         const saltRounds = 10;
-//         const hashedPassword = await bcrypt.hash(
-//           userParam[i].password,
-//           saltRounds
-//         );
-//         // Create a new User instance with the hashed password and 'fullName'
-//         const user = new User({
-//           user_id: userParam[i].user_id,
-//           fullName: userParam[i].fullName, // Make sure 'fullName' is provided
-//           phone: userParam[i].phone,
-//           email: userParam[i].email,
-//           password: hashedPassword,
-//           image: userParam[i].image,
-//         });
+app.post("/addusers", async (req, res) => {
+  try {
+    const userParam = req.body;
+    let user_email_exist = [];
+    // console.log(userParam)
+    for (let i = 0; i < userParam.length; i++) {
+      console.log(userParam[i]);
+      // // Hash the user's password before saving it
+      // Check if the email is already in use
+      if (!(await User.findOne({ email: userParam[i].email }))) {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(
+          userParam[i].password,
+          saltRounds
+        );
+        // Create a new User instance with the hashed password and 'fullName'
+        const user = new User({
+          user_id: userParam[i].user_id,
+          fullName: userParam[i].fullName, // Make sure 'fullName' is provided
+          phone: userParam[i].phone,
+          email: userParam[i].email,
+          password: hashedPassword,
+          image: userParam[i].image,
+        });
 
-//         // Save the user to the database
-//         await user.save();
-//       } else {
-//         user_email_exist.push(userParam[i]);
-//       }
-//     }
-//     // here print the users are exist in DB
-//     if (user_email_exist) {
-//       res
-//         .status(201)
-//         .json({ users: user_email_exist, massege: "User is exist" });
-//     }
+        // Save the user to the database
+        await user.save();
+      } else {
+        user_email_exist.push(userParam[i]);
+      }
+    }
+    // here print the users are exist in DB
+    if (user_email_exist) {
+      res
+        .status(201)
+        .json({ users: user_email_exist, massege: "User is exist" });
+    }
 
-//     res.status(201).json({ message: "User added successfully" });
-//   } catch (err) {
-//     res.status(404).json({ message: "Server error: " + err.message });
-//   }
-// });
+    res.status(201).json({ message: "User added successfully" });
+  } catch (err) {
+    res.status(404).json({ message: "Server error: " + err.message });
+  }
+});
 
 /////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
