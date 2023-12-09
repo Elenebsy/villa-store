@@ -362,11 +362,11 @@ app.post("/addnewapartment", async (req,res) => {
     const apartmentaram = req.body;
 
     // Check if the property has been published before
-    if (await Apartment.findOne({  apartment_id: apartmentaram.apartment_id })) {
+    if (await Apartment.findOne({  apartments_id: apartmentaram.apartments_id })) {
       return res.status(400).json({ message: "This Apartment has been published before" });
     }    
     const apartment = new Apartment({
-      apartment_id: apartmentaram.apartment_id,
+      apartments_id: apartmentaram.apartments_id,
       category: apartmentaram.category,
       Out_ttitle: apartmentaram.Out_ttitle,
       In_title: apartmentaram.In_title,
