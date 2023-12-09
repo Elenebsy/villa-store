@@ -104,7 +104,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-           <Link to="/">
+            <Link to="/">
             <img src={logo} className='logo' />
         </Link>
           </Typography>
