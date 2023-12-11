@@ -1,6 +1,10 @@
-import React from 'react'
-export default function login() {
+import React from "react";
+import Profile from "../profile/UserProfile.jsx";
+import LogIn from "../login/Login.jsx";
+export default function Login() {
   return (
-  <h1>hello login</h1>
-  )
+    <div>
+      <LogIn />
+    </div>
+  );
 }

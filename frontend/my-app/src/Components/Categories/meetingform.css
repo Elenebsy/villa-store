@@ -1,0 +1,51 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set a minimum height to center the form vertically */
+}
+
+.meeting-form {
+    width: 300px; /* Adjust the width of the form as needed */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    border-radius: 20px;
+    margin-left: 10px;
+    margin-top: 3px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.request-meeting-button {
+    
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: green;
+    border: 1px solid #007bff;
+    border-radius: 510px;
+    cursor: pointer;
+}
+
+.request-meeting-button:hover {
+    background-color: whitesmoke;
+    text-shadow: 0px 0px 5px black;
+    border-color: black;
+}
+.meeting{
+
+}
