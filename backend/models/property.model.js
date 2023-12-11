@@ -13,11 +13,11 @@ const propertySchema = new Schema(
     type:{type: String,required: true }, //(e.g., house, apartment, commercial)
     sale_type:{type: String,required: true }, //(e.g.,Sale by Owner,Distressed Sale, Leasehold Sale, Probate Sale, Auction, Developer Sale, Resale)
     num_room: { type: Number, required: true },
-    num_Bedrooms:{type: Number,required: true },
-    num_Bathrooms:{type: Number,required: true },
-    num_Floors:{type: Number,required: true }, 
-    num_individuals: { type: Number, required: true }, 
-    size:{type: String,required: true },
+    num_Bedrooms: { type: Number, required: true },
+    num_Bathrooms: { type: Number, required: true },
+    num_Floors: { type: Number, required: true },
+    num_individuals: { type: Number, required: true },
+    size: { type: String, required: true },
     country: { type: String, required: true },
     street: { type: String, required: true },
     city: { type: String, required: true },
@@ -39,4 +39,4 @@ const propertySchema = new Schema(
     timestamps: true,
   }
 );
-module.exports = mongoose.model("Property",propertySchema);
+module.exports = mongoose.model("Property", propertySchema);

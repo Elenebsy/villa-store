@@ -25,7 +25,9 @@ import { Link } from 'react-router-dom';
 import logo from '../Assets/cas.png';
 import './nav.css';
 import { NavLink } from 'react-router-dom';
-import Home from '../Pages/Home';
+import Search from '../Search-Bar/Search';
+import { CartIcon } from 'phosphor-react'; // Import the shopping icon
+
 
 
 const drawerWidth =240;
@@ -102,12 +104,15 @@ export default function PersistentDrawerLeft() {
             sx={{ mr: 2, ...(open && { display: 'none' }), color: 'black' }}
           >
             <MenuIcon />
+            
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-           <Link to="/">
+            <Link to="/">
             <img src={logo} className='logo' />
         </Link>
           </Typography>
+         <div className='search-container'> <Search/>
+         </div>
         </Toolbar>
       </AppBar>
       <Drawer

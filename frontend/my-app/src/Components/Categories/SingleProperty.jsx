@@ -5,12 +5,13 @@ import './single.css';
 
 const SingleProperty = () => {
   const [property, setProperty] = useState({});
-  const { id } = useParams();
+  const { propertyId } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/property/1`);
+        console.log(propertyId)
+        const response = await axios.get(`/property/${propertyId}`);
         const data = response.data;
         setProperty(data);
         console.log('Fetched Single Property Data:', data);
@@ -21,7 +22,7 @@ const SingleProperty = () => {
     };
 
     fetchData();
-  }, [id]);
+  }, []);
 
   return (
     <div className="single-property-container">
@@ -29,8 +30,14 @@ const SingleProperty = () => {
         <p>Loading..</p>
       ) : (
         <>
-          <img src={property.image1} alt={`Property`} className="single-property-image" />
-          <Link to={`/property/1/meeting-request`} className="request-meeting-button">
+        <dev className="image-contaner">
+          <img src={property.image1}  alt={`Property`} className="single-property-imagehome" />
+          <div className='sidimage'>
+          <img src={property.image2} alt={`Property`} className='img1'/>
+          <img src={property.image3} alt={`Property`}className='img2'/>
+          </div>
+          </dev>
+          <Link to={`/property/2/meeting-request`} className="request-meeting-button">
             Request a Meeting
           </Link>
 

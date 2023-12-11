@@ -17,6 +17,8 @@ import Cart from './Components/Categories/Cart.jsx';
 import Houses from './Components/Categories/Houses.jsx';
 import Apartments from './Components/Categories/Apartments.jsx';
 import SingleProperty from './Components/Categories/SingleProperty.jsx';
+import SingleApartmens from './Components/Categories/SingleApartmens.jsx';
+
 import MeetingRequestForm from './Components/Categories/meetingform.jsx';
 
 
@@ -29,16 +31,20 @@ const pages = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/cart" element={<Cart />} />
+      {/* <HousesContextProvider> */}
+      <Route path="/Cart" element={<Cart />} />
       <Route path="/Houses" element={<Houses />} />
+      {/* </HousesContextProvider> */}
       <Route path="/Apartments" element={<Apartments />} />
       {/* Add a route for SingleProperty */}
       <Route path="/property/:propertyId" element={<SingleProperty />} />
+      
+      <Route path="/apartments/:apartmentsid" element={<SingleApartmens />} />
+
       <Route path="/property/:propertyId/meeting-request" element={<MeetingRequestForm />} />
     </Route>
   )
 );
-
 function App() {
   return (
     <>

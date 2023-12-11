@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import Slider from 'react-slick';
 import './Home.css';
 import './mainslider.css';
-import Search from '../Search-Bar/Search';
 import Footer from '../Footer/Footer';
 
 export default class Home extends Component {
@@ -37,8 +35,8 @@ export default class Home extends Component {
     const { propertyData, loading } = this.state;
 
     // Filter properties based on type
-    const houses = propertyData.filter((property) => property.type === 'house').slice(0, 9);
-    const apartments = propertyData.filter((property) => property.type === 'apartment').slice(0, 9);
+    const houses = propertyData.filter((property) => property.type === 'house').slice(0, 20);
+    const apartments = propertyData.filter((property) => property.type === 'apartment').slice(0, 20);
 
     return (
       <div className="HomeBody">
@@ -58,44 +56,43 @@ export default class Home extends Component {
             </ul>
           </div>
         </div>
-        <div className="h">
-          <Search />
-        </div>
-        <div className="categoryProducts">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <>
-              <div className="slider">
-                {houses.map((property) => (
-                  <div key={property.property_id} className="slider-item">
-                    <div className="card">
-                      <img src={property.image1} alt={property.Out_ttitle} />
-                      <div className="card-content">
-                        <h3>{property.Out_ttitle}</h3>
-                        <p>Price: ${property.price}</p>
-                        {/* Add more details as needed */}
+        <div className='h'>
+          <div className="categoryProducts">
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              <>
+                <div className="photo-grid">
+                  {houses.map((property) => (
+                    <div key={property.property_id} className="photo-item">
+                      <div className="card">
+                        <img src={property.image1} alt={property.Out_ttitle} />
+                        <div className="card-content">
+                          <h3>{property.Out_ttitle}</h3>
+                          <p>Price: ${property.price}</p>
+                          {/* Add more details as needed */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div className="slider">
-                {apartments.map((property) => (
-                  <div key={property.property_id} className="slider-item">
-                    <div className="card">
-                      <img src={property.image1} alt={property.Out_ttitle} />
-                      <div className="card-content">
-                        <h3>{property.Out_ttitle}</h3>
-                        <p>Price: ${property.price}</p>
-                        {/* Add more details as needed */}
+                  ))}
+                </div>
+                <div className="photo-grid">
+                  {apartments.map((property) => (
+                    <div key={property.property_id} className="photo-item">
+                      <div className="card">
+                        <img src={property.image1} alt={property.Out_ttitle} />
+                        <div className="card-content">
+                          <h3>{property.Out_ttitle}</h3>
+                          <p>Price: ${property.price}</p>
+                          {/* Add more details as needed */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
         <Footer />
       </div>

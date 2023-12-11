@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const purchaseSchema = new Schema(
   {
     user_id: { type: String, required: true },
-    property_id: { type: String, required: true },
-    price: { type: Boolean, required: true },
+    property_id: { type: String,unique: true, required: true },
   },
   {
     timestamps: true,

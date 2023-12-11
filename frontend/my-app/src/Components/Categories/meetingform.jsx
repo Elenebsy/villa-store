@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './meetingform.css';
 
 const MeetingRequestForm = () => {
     const [formData, setFormData] = useState({
@@ -19,17 +20,14 @@ const MeetingRequestForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle form submission (you can send the data to your backend or perform any other actions)
         console.log('Form submitted:', formData);
-        // Instead of using history, you can use Link to navigate
-        // Redirect to the meeting request page
-        // history.push('/meetingreq');
     };
 
     return (
         <div className="form-container">
-            <h2>Meeting Request Form</h2>
-            <form onSubmit={handleSubmit}>
+          
+            <form onSubmit={handleSubmit} className="meeting-form">
+            <h2 className='meeting'>Meeting Request Form</h2>
                 <div className="form-group">
                     <label htmlFor="name">Name:</label>
                     <input
@@ -78,7 +76,7 @@ const MeetingRequestForm = () => {
                     />
                 </div>
 
-                <Link to="/cart" className="request-meeting-button">
+                <Link to="/Cart" className="request-meeting-button">
                     Request a Meeting
                 </Link>
             </form>

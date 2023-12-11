@@ -1,15 +1,38 @@
-/* Common styles for all screen sizes */
+
 .single-property-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.single-property-image {
+.single-property-imagehome {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 30px;
     margin-bottom: 20px;
+    transition: transform 0.3s ease; 
+}
+
+.img1,
+.img2 {
+    border-radius: 30px;
+    width: 50%;
+    height: auto;
+    transition: transform 0.3s ease;
+    margin-bottom: 30px;
+}
+
+.sidimage {
+    display: flex;
+    justify-content: center;
+}
+
+
+.sidimage:hover .img1,
+.sidimage:hover .img2
+{
+    transform: scale(1.1);
+    margin:  0px 50px 50px 50px;
 }
 
 .single-property-content {
@@ -42,11 +65,8 @@ h2 {
     transition: color 0.3s ease;
 }
 
-.back-link:hover {
-    color: #1b6ca8;
-}
 
-/* Button styles */
+
 .request-meeting-button {
     background-color: #1b6ca8;
     color: #fff;
@@ -56,14 +76,13 @@ h2 {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-decoration: none; /* Hide the underline */
+    text-decoration: none; 
 }
 
 .request-meeting-button:hover {
     background-color: #155084;
-    text-decoration: none; /* Hide the underline on hover */
+    text-decoration: none; 
 }
-/* Modernize property details section */
 .property-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -76,8 +95,6 @@ h2 {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
-/* Media queries for responsive design */
 @media screen and (max-width: 600px) {
     .single-property-content {
         padding: 10px;

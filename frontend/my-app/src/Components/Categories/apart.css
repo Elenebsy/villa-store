@@ -1,0 +1,53 @@
+/* Update your CSS */
+
+.grid-container {
+    margin-top: 20px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 23px; 
+    justify-content: center;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-image {
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  h2 {
+    margin-top: 0;
+    color: black; 
+    text-decoration: none;
+  }
+  
+  p {
+    margin-bottom: 8px;
+    color: black; 
+    text-decoration:none;
+  }
+  
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 18px; /* Adjust the gap for smaller screens */
+    }
+  }
+      
